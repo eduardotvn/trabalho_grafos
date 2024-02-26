@@ -1,7 +1,7 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 
-class ImageOpenerApp:
+class MainApp:
     def __init__(self, master, image_path, height, width):
         self.master = master
         self.master.title("Treasure Hunt")
