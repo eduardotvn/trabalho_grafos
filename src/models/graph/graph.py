@@ -25,8 +25,10 @@ class Graph():
     def addVertex(self, v:Vertex) -> None:
         self.__vertexs[v.getValue()] = []
 
-    def addEdge(self, v:Vertex, w:Vertex) -> None:
+    def addEdge(self, v:Vertex, w:Vertex, directional=False) -> None:
         self.__vertexs[v.getValue()].append(w)
+        if not directional:
+            self.__vertexs[w.getValue()].append(v)
 
 v1 = Vertex()
 v2 = Vertex()
