@@ -18,14 +18,24 @@ class Vertex():
         self.__itens.append(item)
 
 class Graph():
-
+    """
+    Representação de um grafo por listas de adjacências.
+    """
     def __init__(self) -> None:
         self.__vertexs: dict[list] = {}
 
     def addVertex(self, v:Vertex) -> None:
+        """
+        Adiciona um novo vértice no grafo.
+        v: Vertex
+        """
         self.__vertexs[v.getValue()] = []
 
     def addEdge(self, v:Vertex, w:Vertex, directional=False) -> None:
+        """
+        Adicona uma nova aresta segundo a representação de listas de adjacências.\n
+        Se directional for False a adição considera o grafo não direcionado, caso True direcionado. 
+        """
         self.__vertexs[v.getValue()].append(w)
         if not directional:
             self.__vertexs[w.getValue()].append(v)
