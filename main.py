@@ -31,5 +31,5 @@ if __name__ == "__main__":
     width = 1280
 
     root = tk.Tk()
-    app = ImageOpenerApp(root, image_path, height=height, width=width)
+    app = MainApp(root, image_path, height=height, width=width)
     root.mainloop()
