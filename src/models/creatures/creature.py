@@ -1,6 +1,7 @@
 
 
 class Creature:
+    
     def __init__(self, hp: int, attack: int) -> None:
         self.__hp = hp
         self.__attack = attack
