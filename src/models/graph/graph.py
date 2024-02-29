@@ -1,4 +1,4 @@
-from models.itens.item import Item
+from src.models.itens.item import Item
 
 class Vertex():
     """
@@ -30,6 +30,16 @@ class Vertex():
         Adiciona um item ao Vertex.
         """
         self.__itens.append(item)
+
+    def removeItem(self, item: Item) -> Item:
+        """
+        Remove o item passado da lista de itens do vértice.\n
+        Retorna o item caso sucesso e None caso o item não exista.
+        """
+        if item in self.__itens:
+            self.__itens.remove(item)
+            return item
+        return None 
 
 class Graph():
     """
@@ -63,10 +73,30 @@ class Graph():
             self.__vertexs[w.getValue()].append(v)
         self.__m += 1
 
-    def getNeighbors(self, v:Vertex) -> list[Vertex]:
-        return self.__vertexs[v.getValue()]
+    def getN(self) -> int:
+        """
+        Retorna a quantidade de vértices do grafo.
+        """
+        return self.__n
+    
+    def getM(self) -> int:
+        """
+        Retorna a quantidade de arestas do grafo.
+        """
+        return self.__m
 
-v1 = Vertex()
-v2 = Vertex()
-print(v1.getValue())
-print(v2.getValue())
+    def getNeighbors(self, v:Vertex) -> list[Vertex]:
+        """
+        Se existir, retorna a lista de adjacência do vértice.\n
+        Caso contrario retorna None.
+        """
+        if v in self.__vertexs.keys():
+            return self.__vertexs[v.getValue()]
+        return None
+    
+    def getVertexs(self) -> set:
+        """
+        Retorna um set contendo os valores de cada vértice do grafo.
+        """
+        return self.__vertexs.keys()
+    
