@@ -1,13 +1,12 @@
-from models.graph.graph import Vertex
-from random import choice
+from random import choice, randint
+from math import ceil
 
-class Creature:
+class Creature():
     
-    def __init__(self, hp: int, attack: int, vertexValue: int) -> None:
+    def __init__(self, hp: int, attack: int) -> None:
         self.__hp = hp
         self.__HP_MAX = hp
         self.__attack = attack
-        self.__vertexValue = vertexValue
 
     def getAttack(self) -> int:
         """
@@ -15,8 +14,9 @@ class Creature:
         """
         return self.__attack
 
-    def setAttack(self, attack: int) -> None:
+    def __setAttack(self, attack: int) -> None:
         """
+        NÃO DEVE SER USADO.\n
         Altera o ataque da criatura.\n
         Desde que o valor passado seja maior que zero.
         """
@@ -32,12 +32,19 @@ class Creature:
 
     def __setHp(self, hp: int) -> None:
         """
+        NÃO DEVE SER USADO.\n
         Altera o HP da criatura. \n
         Desde que o HP seja maior ou igual a zero.
         """
         if hp < 0:
             return
         self.__hp = hp
+
+    def fullHealth(self) -> None:
+        """
+        Altera o HP da criatura para o seu valor máximo.
+        """
+        self.__setHp(self.__HP_MAX)
 
     def setDamage(self, damage: int) -> None:
         """
@@ -75,17 +82,21 @@ class Creature:
         """
         return not self.isDead()
     
-    def getVertexValue(self) -> int:
+    def attack(self) -> tuple[int, str]:
         """
-        Retorna o valor único do vértice onde a criatura está.
+        Retorna o valor do dano gerado pelo ataque e sua força ('W', 'M' ou 'S').\n
+        Tando a força do ataque quando o dano são escolhidos aleatoriamente.\n
+        W - Fraco (20%)\n
+        M - Médio (60%)\n
+        S - Forte (20%)\n
         """
-        return self.__vertexValue
-    
-    def move(self, adjacencyList: list[Vertex]) -> Vertex:
-        """
-        Move a criatura para um novo vértice escolhido aleatoriamente. \n
-        Retorna o vértice escolhido.
-        """
-        v = choice(adjacencyList)
-        self.__vertexValue = v.getValue()
-        return v
+        strength = choice(['W', 'M', 'M', 'M', 'S'])
+
+        if strength == 'W':
+            damage = randint(1, ceil(.3 * self.getAttack()))
+        elif strength == 'M':
+            damage = randint(ceil(.4 * self.getAttack()), ceil(.6 * self.getAttack()))
+        else:
+            damage = randint(ceil(.7 * self.getAttack()), self.getAttack())
+        
+        return damage, strength

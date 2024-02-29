@@ -1,4 +1,4 @@
-from src.models.itens.item import Item
+from item import Item
 
 class Vertex():
     """
