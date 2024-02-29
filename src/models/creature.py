@@ -100,3 +100,11 @@ class Creature():
             damage = randint(ceil(.7 * self.getAttack()), self.getAttack())
         
         return damage, strength
+
+    def resetDeath(self) -> None:
+        """
+        Pode ser usado quando uma criatura está morta. \n
+        Esta função traz a criatura de volta a vida!
+        """
+        if self.isDead():
+            self.fullHealth()

@@ -100,3 +100,14 @@ class Graph():
         """
         return self.__vertexs.keys()
     
+    def tostring(self):
+        graph = ''
+        vertexs = self.getVertexs()
+        for vertex in vertexs:
+            graph += f'{vertex}:'
+            for edge in self.getNeighbors(vertex):
+                graph += f' {edge.getValue()} '
+            graph += '\n'
+        return graph
+
+    
