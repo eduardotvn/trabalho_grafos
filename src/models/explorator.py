@@ -5,7 +5,7 @@ class Explorator(Creature):
 
     def __init__(self, hp: int, attack: int) -> None:
         self.__weapon: Weapon = None
-        self.__lastCheck = None
+        self.__checks: list = []
         super().__init__(hp, attack)
 
     def getWeapon(self) -> Weapon:
@@ -14,11 +14,15 @@ class Explorator(Creature):
         """
         return self.__weapon
 
-    def setWeapon(self, w: Weapon) -> None:
+    def setWeapon(self, weapon: Weapon) -> Weapon:
         """
-        Altera a arma segurada pelo explorador para a arma passada.
+        Altera a arma segurada pelo explorador para a arma passada. \n
+        Retorna a arma segurada antes pelo explorador, caso exista.
         """
-        self.__weapon = w
+        oldWeapon = self.getWeapon()    
+        self.__weapon = weapon
+        if oldWeapon:
+            return oldWeapon
 
     def hasWeapon(self) -> bool:
         """
@@ -26,27 +30,32 @@ class Explorator(Creature):
         """
         return self.__weapon != None
     
-    def setCheck(self, c: int) -> None:
+    def hasCheckpoint(self) -> bool:
         """
-        Associa o explorador ao valor de um vértice do tipo Checkpoint.
+        Retorna se o explorador possui pelo menos um vértice checkpoint ou não. 
         """
-        self.__lastCheck = c
+        return len(self.__checks) != 0
+    
+    def setCheckpoint(self, check: int) -> None:
+        """
+        Associa o explorador ao valor de um vértice do tipo Checkpoint.\n
+        Esse valor é adicionado no início da lista de Checkpoints.
+        """
+        self.__checks.append(check)
 
-    def useCheck(self) -> int:
+    def getCheckpoint(self) -> int:
         """
-        Se existir um valor de vértice Checkpoint a função o retorna.\n
-        Caso contrário retorna None.
-        Em seguida o atributo perde seu valor.\n
+        Se existir um valor de vértice Checkpoint esse valor é retornado.\n
+        Caso contrário, retorna None.\n
+        Em seguida, o Checkpoint é removido da lista de Checkpoints.
         """
-        if self.__lastCheck:
-            c = self.__lastCheck
-            self.__lastCheck = None
-            return c
+        if self.hasCheckpoint():
+            return self.__checks.pop()
         return None
     
     def getAttack(self) -> int:
         """
-        Retorna o ataque do explorador considerando o dano adicional da arma.
+        Retorna o ataque do explorador considerando o dano adicional da arma, se houver.
         """
         attack = super().getAttack()
         if self.hasWeapon():

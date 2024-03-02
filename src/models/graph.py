@@ -100,10 +100,8 @@ class Graph():
         Adicona uma nova aresta segundo a representação de listas de adjacências.\n
         Se os vértices não existirem no grafo eles serão adicionados.\n
         """
-        if (self.hasNotVertex(v)): 
-            self.addVertex(v)
-        if (self.hasNotVertex(w)):
-            self.addVertex(w)
+        if (self.hasNotVertex(v)): self.addVertex(v)
+        if (self.hasNotVertex(w)): self.addVertex(w)
         self.getAdjacentList(v).append(w)
         self.__m += 1
 
