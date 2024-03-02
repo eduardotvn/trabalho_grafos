@@ -131,4 +131,19 @@ class Graph():
             graph += '\n'
         return graph
 
-    
+def readGraph(filePath: str, directional=False) -> Graph:
+    """
+    Retorna um grafo a partir do arquivo lido.
+    """
+    graph = Graph(directional=directional)
+    with open(filePath) as graphText:
+        for line in graphText.readlines():
+            line = line.strip().split(':')
+            vertex = Vertex(int(line.pop(0)))
+            graph.addVertex(vertex)
+            
+            vertexEdges = line.pop(0).strip().split(' ')
+            for edge in vertexEdges:
+                neighbor = Vertex(int(edge))
+                graph.addEdge(vertex, neighbor)
+    return graph
