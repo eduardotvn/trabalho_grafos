@@ -25,4 +25,4 @@ class Main_Frame:
         self.background_image.pack_forget()
         self.play_button.place_forget()
         
-        play_frame = Play_Frame(self.master, image_path, 720, 1280)
+        play_frame = Play_Frame(self.master, "assets/mapaIlhaMapeada.jpg", 720, 1280)
