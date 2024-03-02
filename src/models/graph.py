@@ -58,19 +58,19 @@ class Graph():
     
     def getAdjacentList(self, v:Vertex) -> list[Vertex]:
         """
-        Retorna a lista de adjacência do vértice passado.
+        Retorna a lista de adjacência do vértice passado como argumento.
         """
         return self.__adjacentList[v.getValue()]
 
     def getVertexs(self) -> set[Vertex]:
         """
-        Retorns um set contendo os vértices do grafo.
+        Retorns um conjunto contendo os vértices do grafo.
         """
         return self.__vertexs.values()
 
     def getVertexsValues(self) -> set[int]:
         """
-        Retorna um set contendo os valores de cada vértice do grafo.
+        Retorna um conjunto contendo os valores de cada vértice do grafo.
         """
         return self.__vertexs.keys()
 
@@ -89,7 +89,6 @@ class Graph():
     def addVertex(self, v:Vertex) -> None:
         """
         Adiciona um novo vértice no grafo.
-        v: Vertex
         """
         if self.hasNotVertex(v):
             self.__vertexs[v.getValue()] = v
