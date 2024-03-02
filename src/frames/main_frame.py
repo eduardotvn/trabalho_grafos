@@ -1,6 +1,7 @@
 import tkinter as tk
 from PIL import Image, ImageTk
 from src.frames.play_frame import Play_Frame
+from src.frames.intro_frame import Intro_Frame
 
 image_path = "assets/mapaIlha.jpg"
 
@@ -24,5 +25,5 @@ class Main_Frame:
     def start_playing(self):
         self.background_image.pack_forget()
         self.play_button.place_forget()
-        
-        play_frame = Play_Frame(self.master, "assets/mapaIlhaMapeada.jpg", 720, 1280)
+
+        intro_frame = Intro_Frame(self.master, "assets/procuradoNickelBottoms.jpg", 720, 1280)

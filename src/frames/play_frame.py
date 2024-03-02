@@ -13,3 +13,5 @@ class Play_Frame:
         self.background_image = tk.Label(self.master, image=photo)
         self.background_image.photo = photo
         self.background_image.pack()
+
+        
