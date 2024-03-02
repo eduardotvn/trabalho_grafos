@@ -2,7 +2,7 @@ import tkinter as tk
 from PIL import Image, ImageTk
 from src.frames.play_frame import Play_Frame
 
-image_path = "assets/IlhaJPG.jpg"
+image_path = "assets/mapaIlha.jpg"
 
 class Main_Frame:
     def __init__(self, master, height, width):
@@ -18,19 +18,11 @@ class Main_Frame:
         self.background_image.pack()
 
         self.play_button_image = tk.PhotoImage(file="assets/buttons/play_button.png")
-        self.play_button = tk.Button(master, image=self.play_button_image, command=self.start_playing)
-        self.play_button.place(x=100, y=height / 6, width=400, height=150)
-
-        self.options_button_image = tk.PhotoImage(file="assets/buttons/options_button.png")
-        self.options_button = tk.Button(master, image=self.options_button_image, command=self.play_clicked)
-        self.options_button.place(x=100, y=height / 2, width=400, height=150)
+        self.play_button = tk.Button(master, image=self.play_button_image, command=self.start_playing, bd=0, borderwidth=0)
+        self.play_button.place(x=100, y = height / 1.55, width=200, height=65)
 
     def start_playing(self):
         self.background_image.pack_forget()
         self.play_button.place_forget()
-        self.options_button.place_forget()
         
         play_frame = Play_Frame(self.master, image_path, 720, 1280)
-
-    def play_clicked(self):
-        print("Play button clicked!")
