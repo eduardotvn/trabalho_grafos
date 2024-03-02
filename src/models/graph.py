@@ -1,15 +1,12 @@
-from item import Item
+from src.models.item import Item
 
 class Vertex():
     """
     Representação dos vértices do grafo
     """
-    # Cada instância de Vertex recebe um valor único crescente a parir de 0
-    __value = 0
 
-    def __init__(self) -> None:
-        self.__value = Vertex.__value
-        Vertex.__value += 1
+    def __init__(self, value) -> None:
+        self.__value = value
         self.__itens = []
 
     def getValue(self) -> int:
@@ -45,32 +42,70 @@ class Graph():
     """
     Representação de um grafo por listas de adjacências.
     """
-    def __init__(self) -> None:
-        self.__vertexs: dict[list[Vertex]] = {}
-        self.__m = 0
-        self.__n = 0
+
+    def __init__(self, directional) -> None:
+        self.__directional: bool = directional
+        self.__adjacentList: dict[int, list[Vertex]] = {}
+        self.__vertexs: dict[int, Vertex] = {}
+        self.__m: int = 0
+        self.__n: int = 0
+
+    def isDirectional(self) -> bool:
+        """
+        Retorna se o grafo é direcionado ou não.
+        """
+        return self.__directional
+    
+    def getAdjacentList(self, v:Vertex) -> list[Vertex]:
+        """
+        Retorna a lista de adjacência do vértice passado.
+        """
+        return self.__adjacentList[v.getValue()]
+
+    def getVertexs(self) -> set[Vertex]:
+        """
+        Retorns um set contendo os vértices do grafo.
+        """
+        return self.__vertexs.values()
+
+    def getVertexsValues(self) -> set[int]:
+        """
+        Retorna um set contendo os valores de cada vértice do grafo.
+        """
+        return self.__vertexs.keys()
+
+    def hasVertex(self, v: Vertex) -> bool:
+        """
+        Retorna se um vértice pertence ou não pertence ao grafo. 
+        """
+        return v.getValue() in self.getVertexsValues()
+    
+    def hasNotVertex(self, v: Vertex) -> bool:
+        """
+        Retorna se um vértice não pertence ou pertence ao grafo. 
+        """
+        return not self.hasVertex(v)
 
     def addVertex(self, v:Vertex) -> None:
         """
         Adiciona um novo vértice no grafo.
         v: Vertex
         """
-        self.__vertexs[v.getValue()] = []
-        self.__n += 1
-
-    def addEdge(self, v:Vertex, w:Vertex, directional=False) -> None:
+        if self.hasNotVertex(v):
+            self.__vertexs[v.getValue()] = v
+            self.__adjacentList[v.getValue()] = []
+            self.__n += 1
+    
+    def addEdge(self, v:Vertex, w:Vertex) -> None:
         """
         Adicona uma nova aresta segundo a representação de listas de adjacências.\n
-        Se directional for False a adição considera o grafo não direcionado, caso True direcionado. 
+        Se os vértices não existirem no grafo eles serão adicionados.\n
         """
-        if (v.getValue() not in self.__vertexs.keys()): 
+        if (self.hasNotVertex(v)): 
             self.addVertex(v)
-        if (w.getValue() in self.__vertexs.keys()):
+        if (self.hasNotVertex(w)):
             self.addVertex(w)
-
-        self.__vertexs[v.getValue()].append(w)
-        if not directional:
-            self.__vertexs[w.getValue()].append(v)
+        self.getAdjacentList(v).append(w)
         self.__m += 1
 
     def getN(self) -> int:
@@ -83,29 +118,15 @@ class Graph():
         """
         Retorna a quantidade de arestas do grafo.
         """
-        return self.__m
-
-    def getNeighbors(self, v:Vertex) -> list[Vertex]:
-        """
-        Se existir, retorna a lista de adjacência do vértice.\n
-        Caso contrario retorna None.
-        """
-        if v in self.__vertexs.keys():
-            return self.__vertexs[v.getValue()]
-        return None
+        if self.isDirectional():
+            return self.__m
+        return self.__m / 2
     
-    def getVertexs(self) -> set:
-        """
-        Retorna um set contendo os valores de cada vértice do grafo.
-        """
-        return self.__vertexs.keys()
-    
-    def tostring(self):
+    def tostring(self) -> str:
         graph = ''
-        vertexs = self.getVertexs()
-        for vertex in vertexs:
-            graph += f'{vertex}:'
-            for edge in self.getNeighbors(vertex):
+        for vertex in self.getVertexs():
+            graph += f'{vertex.getValue()}:'
+            for edge in self.getAdjacentList(vertex):
                 graph += f' {edge.getValue()} '
             graph += '\n'
         return graph
