@@ -1,5 +1,6 @@
 import tkinter as tk
 from src.frames.main_frame import Main_Frame
+from src.models.graph import readGraph
 
 if __name__ == "__main__":
     height = 720
