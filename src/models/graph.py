@@ -7,28 +7,55 @@ class Vertex():
 
     def __init__(self, value) -> None:
         self.__value = value
+        self.__mark = None
+        self.__minCost = None
+        self.__minCostFather = None
         self.__itens = []
 
     def getValue(self) -> int:
         """
-        Retorna o valor único de um Vertex.
-        Esse valor é usado para indexar o Vertex no grafo.
+        Retorna o valor único do Vértice.
+        Esse valor é usado para indexar o Vértice no grafo.
         """
         return self.__value
     
+    def getMark(self):
+        """
+        Retorna o valor da marcação do vértice.
+        """
+        return self.__mark
+    
+    def setMark(self, mark) -> None:
+        """
+        Altera o valor da marca do vértice.
+        """
+        self.__mark = mark
+    
     def getVertexItens(self) -> list[Item]:
         """
-        Retorna a lista de itens do Vertex.
+        Retorna a lista de itens do Vértice.
         """
         return self.__itens
     
+    def getMinCost(self) -> int:
+        return self.__minCost
+    
+    def setMinCost(self, cost: int) -> None:
+        self.__minCost = cost
+
+    def getMinCostFather(self) -> int:
+        return self.__minCostFather
+    
+    def setMinCostFather(self, value: int) -> None:
+        self.__minCostFather = value
+
     def addItem(self, item: Item) -> None:
         """
-        Adiciona um item ao Vertex.
+        Adiciona um item ao Vértice.
         """
         self.__itens.append(item)
 
-    def removeItem(self, item: Item) -> Item:
+    def removeItem(self, item: Item) -> Item | None:
         """
         Remove o item passado da lista de itens do vértice.\n
         Retorna o item caso sucesso e None caso o item não exista.
@@ -37,13 +64,18 @@ class Vertex():
             self.__itens.remove(item)
             return item
         return None 
+    
+    def __eq__(self, __value: object) -> bool:
+        if isinstance(__value, Vertex):
+            return self.getValue() == __value.getValue()
+        return False
 
 class Graph():
     """
     Representação de um grafo por listas de adjacências.
     """
 
-    def __init__(self, directional) -> None:
+    def __init__(self, directional=False) -> None:
         self.__directional: bool = directional
         self.__adjacentList: dict[int, list[Vertex]] = {}
         self.__vertexs: dict[int, Vertex] = {}
@@ -55,6 +87,13 @@ class Graph():
         Retorna se o grafo é direcionado ou não.
         """
         return self.__directional
+    
+    def get(self, value: int) -> Vertex | None:
+        """
+        Retorna o vértice que possui o valor especificado, se existir.
+        """
+        if value in self.getVertexsValues():
+            return self.__vertexs[value]
     
     def getAdjacentList(self, v:Vertex) -> list[Vertex]:
         """
@@ -103,6 +142,8 @@ class Graph():
         if (self.hasNotVertex(v)): self.addVertex(v)
         if (self.hasNotVertex(w)): self.addVertex(w)
         self.getAdjacentList(v).append(w)
+        if not self.isDirectional():
+            self.getAdjacentList(w).append(v)
         self.__m += 1
 
     def getN(self) -> int:
@@ -118,6 +159,12 @@ class Graph():
         if self.isDirectional():
             return self.__m
         return self.__m / 2
+    
+    def isConnected(self, v: Vertex, w: Vertex) -> bool:
+        """
+        Retorna se o vértice w está na vizinhança de v.
+        """
+        return w in self.getAdjacentList(v)
     
     def tostring(self) -> str:
         graph = ''

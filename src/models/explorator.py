@@ -8,13 +8,13 @@ class Explorator(Creature):
         self.__checks: list = []
         super().__init__(hp, attack)
 
-    def getWeapon(self) -> Weapon:
+    def getWeapon(self) -> Weapon | None:
         """
         Retorna a arma segurada pelo explorador caso ela exista.
         """
         return self.__weapon
 
-    def setWeapon(self, weapon: Weapon) -> Weapon:
+    def setWeapon(self, weapon: Weapon) -> Weapon | None:
         """
         Altera a arma segurada pelo explorador para a arma passada. \n
         Retorna a arma segurada antes pelo explorador, caso exista.
@@ -43,7 +43,7 @@ class Explorator(Creature):
         """
         self.__checks.append(check)
 
-    def getCheckpoint(self) -> int:
+    def getCheckpoint(self) -> int | None:
         """
         Se existir um valor de vértice Checkpoint esse valor é retornado.\n
         Caso contrário, retorna None.\n
@@ -55,7 +55,8 @@ class Explorator(Creature):
     
     def getAttack(self) -> int:
         """
-        Retorna o ataque do explorador considerando o dano adicional da arma, se houver.
+        Retorna o ataque do explorador. \n
+        Adciona o dano adicional da arma segurada, se houver.
         """
         attack = super().getAttack()
         if self.hasWeapon():

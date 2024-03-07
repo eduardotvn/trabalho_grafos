@@ -13,16 +13,6 @@ class Creature():
         Retorna o ataque da criatura.
         """
         return self.__attack
-
-    def __setAttack(self, attack: int) -> None:
-        """
-        NÃO DEVE SER USADO.\n
-        Altera o ataque da criatura.\n
-        Desde que o valor passado seja maior que zero.
-        """
-        if attack <= 0:
-            return
-        self.__attack = attack
     
     def getHp(self) -> int:
         """
@@ -34,11 +24,10 @@ class Creature():
         """
         NÃO DEVE SER USADO.\n
         Altera o HP da criatura. \n
-        Desde que o HP seja maior ou igual a zero.
+        Desde que o HP seja maior ou igual a zero e menor que o HP máximo.
         """
-        if hp < 0:
-            return
-        self.__hp = hp
+        if hp >= 0 and hp <= self.__HP_MAX:
+            self.__hp = hp
 
     def fullHealth(self) -> None:
         """
@@ -62,7 +51,7 @@ class Creature():
         """
         Aumenta o HP da criatura.\n
         Desde que o aumento seja positivo.\n
-        Se o aumento mais o HP atual for maior que o HP máximo então a criatura ficará com a vida cheia.
+        Se o aumento somado ao HP atual for maior que o HP máximo então a criatura ficará com a vida cheia.
         """
         if heal <= 0:
             return
@@ -72,13 +61,13 @@ class Creature():
     
     def isDead(self) -> bool:
         """
-        Retorna True se a criatura estiver morta.
+        Retorna Verdadeiro se a criatura estiver morta, Falso caso contrário.
         """
         return self.getHp() == 0
     
     def isAlive(self) -> bool:
         """
-        Retorna True se a criatura estiver viva.
+        Retorna Verdadeiro se a criatura estiver viva, Falso caso contrário.
         """
         return not self.isDead()
     
