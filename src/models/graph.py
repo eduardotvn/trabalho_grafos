@@ -69,6 +69,9 @@ class Vertex():
         if isinstance(__value, Vertex):
             return self.getValue() == __value.getValue()
         return False
+    
+    def __str__(self) -> str:
+        return f'Vertex: {self.getValue()}'
 
 class Graph():
     """
@@ -174,6 +177,9 @@ class Graph():
                 graph += f' {edge.getValue()} '
             graph += '\n'
         return graph
+    
+    def __str__(self) -> str:
+        return self.tostring()
 
 def readGraph(filePath: str, directional=False) -> Graph:
     """
