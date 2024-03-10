@@ -11,13 +11,13 @@ def deepSearch(graph: Graph, startVertex: Vertex) -> list[int]:
     """
     Retorna uma lista de vértices a partir de uma busca em profundidade no grafo.
     """
-    def visita(graph: Graph, vertex: Vertex, searchStack: list[Vertex]) -> list[Vertex]:
+    def visit(graph: Graph, vertex: Vertex, searchStack: list[Vertex]) -> list[Vertex]:
         searchStack.append(vertex)
         for u in graph.getAdjacentList(vertex):
             if u.getMark() == Mark.WHITE:
                 path.append(u.getValue())
                 u.setMark(Mark.GRAY)
-                visita(graph, u, searchStack)
+                visit(graph, u, searchStack)
                 path.append(vertex.getValue())
         vertex.setMark(Mark.BLACK)
         searchStack.pop()
@@ -31,15 +31,18 @@ def deepSearch(graph: Graph, startVertex: Vertex) -> list[int]:
             vertex.setMark(Mark.WHITE)
         graph.get(startVertex.getValue()).setMark(Mark.GRAY) # o vértice inicial é marcado como cinza
         path.append(startVertex.getValue())
-        visita(graph, startVertex, searchStack)
+        visit(graph, startVertex, searchStack)
     return path
 
 def  breadthFirstSearch(graph: Graph, startVertex: Vertex) -> list[int]:
     """
     Retorna uma lista de vértices a partir de uma busca em largura no grafo.
     """
-    path: list[int] = [] # a ordem do percuso dos vértices em profundidade
-    father: dict[int, int] = {} # armazena, para cada vértice, o vértice pelo qual este (chave) foi acessado primeiramente.
+
+    # a ordem do percuso dos vértices em profundidade
+    path: list[int] = []
+    # armazena, para cada vértice, o vértice pelo qual este (chave) foi acessado primeiramente.
+    father: dict[int, int] = {}
 
     for vertex in graph.getVertexs():
         vertex.setMark(Mark.WHITE)
@@ -67,7 +70,7 @@ def  breadthFirstSearch(graph: Graph, startVertex: Vertex) -> list[int]:
         if len(searchQueue) > 0:
             '''
             Se a busca não chegou ao fim, então é gerado um caminho
-            do vértice iniciao até o pai do próximo vértice. 
+            do vértice inicial até o pai do próximo vértice. 
             '''
             nextValueFather = father[searchQueue[-1].getValue()]
             if nextValueFather != path[-1]:
