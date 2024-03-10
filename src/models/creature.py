@@ -89,6 +89,13 @@ class Creature():
             damage = randint(ceil(.7 * self.getAttack()), self.getAttack())
         
         return damage, strength
+    
+    def getHitFrom(self, creature) -> tuple[int, str]:
+        if creature.isAlive():
+            damage, strength = creature.attack()
+            self.setDamage(damage)
+            return damage, strength
+        return 0, 'W'
 
     def resetDeath(self) -> None:
         """
@@ -97,3 +104,6 @@ class Creature():
         """
         if self.isDead():
             self.fullHealth()
+
+    def __repr__(self) -> str:
+        return f'Creature(hp={self.__hp}, attack={self.__attack}, HP_MAX={self.__HP_MAX})'
