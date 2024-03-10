@@ -13,7 +13,7 @@ class BattleResult(Enum):
 class Battle():
     """
     Classe de dados para batalhas.\n
-    \ttype: tipo da batalha\n
+    \t``type``: tipo da batalha\n
     \tresultId: cada id representa um resultado de batalha diferente\n
     \tresult: uma string que representa um dos resultados possíveis da batalha\n
     \texploratorDamage: tupla contento o dano e força do ataque do explorador. Apenas em: Explorador x Inimigo\n 
@@ -51,6 +51,9 @@ def exploratorBattle(explorator: Explorator, enemy: Enemy) -> Battle:
     return Battle('Explorator x Enemy', result.value, result.name, exploratorDamage, enemyDamage, None, None)
 
 def enemiesBattle(enemy1: Enemy, enemy2: Enemy) -> Battle:
+    """
+    Batalha entre dois inimigos.
+    """
     winner, loser = enemy1, enemy2
     if enemy1.getAttack() > enemy2.getAttack():
         enemy2.getHitFrom(enemy1)
@@ -62,6 +65,9 @@ def enemiesBattle(enemy1: Enemy, enemy2: Enemy) -> Battle:
     return Battle('Enemy x Enemy', result.value, result.name, None, None, winner, loser)
     
 def calcResultBattle(winner: Enemy, loser: Enemy) -> BattleResult:
+    """
+    Calcula o resultado da batalha a partir dos estados das criaturas. 
+    """
     if winner.isAlive() and loser.isAlive():
         return BattleResult.FINISHED
     elif winner.isAlive() and loser.isDead():
