@@ -19,9 +19,6 @@ path = deepSearch(graph, graph.get(0))
 index = 0
 current_pos = path[index] 
 current_vertex = graph.get(current_pos)
-creature_on_vertex = False
-clear_area_options = ["Procurar por recursos"]
-fight_options = ["Lutar", "Fugir"]
 menu_pos = [360, 380]
 
 class Play_Frame:
@@ -29,6 +26,7 @@ class Play_Frame:
         self.master = master
         self.master.title("Treasure Hunt")
 
+        self.menu_label_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
         custom_font = font.Font(family="Gabriola", size=24)
         image = Image.open(image_path)
         image = image.resize((width, height))
@@ -47,29 +45,19 @@ class Play_Frame:
         self.menu_bar_label.pack()
         self.menu_bar_label.place(x=menu_pos[0], y=menu_pos[1], width=718, height=318)
 
-        self.procceed_button_image = tk.PhotoImage(file="assets/buttons/procceed.png")
-        self.procceed_button = tk.Button(master, image=self.procceed_button_image, command=self.procceed, bd=0, borderwidth=0)
-        self.procceed_button.place(x=900, y = height / 1.15, width=100, height=48)
-
         for index, position in enumerate(vertexes_on_map):
             self.play_button = tk.Button(master, text = index, bd=0, borderwidth=0)
             self.play_button.place(x = position[0], y = position[1], width=20, height=20)
 
-        
+        self.clear_vertex = False
+        self.show_menu()
 
-        self.menu_label_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
-
-        if not creature_on_vertex:
-            self.menu_header_text = tk.Label(master, text = "Você se depara com um XXXX! O que fazer?", font = custom_font, bg="#CDA88E")
-            self.menu_header_text.place(x=menu_pos[0] + 250, y=menu_pos[1] + 20, height= 50)
-
-            for index, options in enumerate(fight_options):
-                self.menu_label = tk.Label(master, text=options, image=self.menu_label_image, font = custom_font,compound=tk.CENTER, bd=0, borderwidth=0)
-                self.menu_label.place(x=menu_pos[0] + 270, y=menu_pos[1] + 80 + 100*index, width=300, height=59)
-        else: 
-                self.menu_label = tk.Label(master, text="Procurar por recursos", font = custom_font, image=self.menu_label_image, compound=tk.CENTER, bd=0, borderwidth=0)
-                self.menu_label.place(x=menu_pos[0] + 270, y=menu_pos[1] + 60, width=300, height=59)
-
+    def show_menu(self):
+        custom_font = font.Font(family="Gabriola", size=24)
+        if self.clear_vertex:
+            self.show_clear_menu(self.master, custom_font)
+        else:
+            self.show_battle_menu(self.master, custom_font)
 
     def procceed(self):
         global index, current_pos, path, current_vertex
@@ -78,3 +66,41 @@ class Play_Frame:
         current_vertex = graph.get(current_pos)
         print(current_vertex.getValue())
 
+    def show_clear_menu(self, master, custom_font):
+        self.procceed_button_image = tk.PhotoImage(file="assets/buttons/procceed.png")
+        self.procceed_button = tk.Button(master, image=self.procceed_button_image, command=self.procceed, bd=0, borderwidth=0)
+        self.procceed_button.place(x=900, y = 720 / 1.15, width=100, height=48)
+
+        self.search_resources = tk.Button(master, text="Procurar por recursos", font = custom_font, command = self.search_for_resources,image=self.menu_label_image, compound=tk.CENTER, bd=0, borderwidth=0)
+        self.search_resources.place(x=menu_pos[0] + 270, y=menu_pos[1] + 60, width=300, height=59)
+
+    def show_battle_menu(self, master, custom_font):
+        self.menu_header_text = tk.Label(master, text="Você se depara com um XXXX! O que fazer?", font=custom_font, bg="#CDA88E")
+        self.menu_header_text.place(x=menu_pos[0] + 250, y=menu_pos[1] + 20, height=50)
+
+        self.fight_button_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
+        self.fight_button = tk.Button(master, text="Lutar!", image=self.fight_button_image, command=self.fight ,font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
+        self.fight_button.place(x=menu_pos[0] + 270, y=menu_pos[1] + 80, width=300, height=59)
+
+        self.flee_button_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
+        self.flee_button = tk.Button(master, text="Fugir", image=self.flee_button_image, command=self.search_for_resources ,font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
+        self.flee_button.place(x=menu_pos[0] + 270, y=menu_pos[1] + 180, width=300, height=59)
+
+    def fight(self):
+        print("Lutar!")
+
+    def flee(self):
+        print("Fugir!")
+    def search_for_resources(self):
+        print("Searching")
+
+
+    def toggle_menu(self):
+        if self.clear_vertex == True:
+            self.search_resources.destroy()
+            self.procceed_button.destroy()
+        else:
+            self.fight_button.destroy()
+            self.flee_button.destroy()
+        self.clear_vertex = not self.clear_vertex
+        self.show_menu()
