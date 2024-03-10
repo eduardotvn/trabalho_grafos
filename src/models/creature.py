@@ -7,6 +7,7 @@ class Creature():
         self.__hp = hp
         self.__HP_MAX = hp
         self.__attack = attack
+        self.__vertexValue: int = None
 
     def getAttack(self) -> int:
         """
@@ -19,6 +20,24 @@ class Creature():
         Retorna o HP da criatura.
         """
         return self.__hp
+    
+    def hasVertexValue(self) -> bool:
+        """
+        Retorna se a criatura possui um valor de vértice definido.
+        """
+        return self.__vertexValue != None
+    
+    def getVertexValue(self) -> int | None:
+        """
+        Retorna o valor do vértice no qual a criatura está.
+        """
+        return self.__position
+    
+    def setVertexValue(self, value: int) -> None:
+        """
+        Altera a posição da criatura no grafo para o valor do vértice passado.
+        """
+        self.__position = value
 
     def __setHp(self, hp: int) -> None:
         """
@@ -91,6 +110,9 @@ class Creature():
         return damage, strength
     
     def getHitFrom(self, creature) -> tuple[int, str]:
+        """
+        Atribui o dano de ataque da criatura passada, se ela estiver viva, a criatura.
+        """
         if creature.isAlive():
             damage, strength = creature.attack()
             self.setDamage(damage)
