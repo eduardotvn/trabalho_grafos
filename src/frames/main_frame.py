@@ -22,6 +22,7 @@ class Main_Frame:
         self.play_button = tk.Button(master, image=self.play_button_image, command=self.start_playing, bd=0, borderwidth=0)
         self.play_button.place(x=100, y = height / 1.55, width=200, height=65)
 
+
     def start_playing(self):
         self.background_image.pack_forget()
         self.play_button.place_forget()
