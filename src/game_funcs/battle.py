@@ -14,12 +14,12 @@ class Battle():
     """
     Classe de dados para batalhas.\n
     \t``type``: tipo da batalha\n
-    \tresultId: cada id representa um resultado de batalha diferente\n
-    \tresult: uma string que representa um dos resultados possíveis da batalha\n
-    \texploratorDamage: tupla contento o dano e força do ataque do explorador. Apenas em: Explorador x Inimigo\n 
-    \tenemyDamage: tupla contento o dano e força do ataque do inimigo. Apenas em: Explorador x Inimigo\n
-    \twinner: vencedor da batalha do tipo Inimigo x Inimigo\n
-    \tloser: perdedor da batalha do tipo Inimigo x Inimigo\n
+    \t``resultId``: cada id representa um resultado de batalha diferente\n
+    \t``result``: uma string que representa um dos resultados possíveis da batalha\n
+    \t``exploratorDamage``: tupla contento o dano e força do ataque do explorador. Apenas em: Explorador x Inimigo\n 
+    \t``enemyDamage``: tupla contento o dano e força do ataque do inimigo. Apenas em: Explorador x Inimigo\n
+    \t``winner``: vencedor da batalha do tipo Inimigo x Inimigo\n
+    \t``loser``: perdedor da batalha do tipo Inimigo x Inimigo\n
     """
     type: str
     resultId: int
