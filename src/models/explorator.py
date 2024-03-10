@@ -1,5 +1,5 @@
-from creature import Creature
-from item import Weapon
+from src.models.creature import Creature
+from src.models.item import Weapon
 
 class Explorator(Creature):
 

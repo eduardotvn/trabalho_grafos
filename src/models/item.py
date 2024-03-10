@@ -1,5 +1,3 @@
-from src.models.explorator import Explorator
-
 class Item():
     """
     Classe genérica de itens.
@@ -70,16 +68,19 @@ class Cure(Item):
     
     def getHeal(self) -> int:
         """
+        Retorna a informação do potencial de cura do item.
+        """
+        return self.__heal
+        
+    def use(self) -> int:
+        """
+        Serve para usar o item de cura.\n
         Retorna o potencial de cura do item.\n
         Leva em consideração a usabilidade.
         """
-        if self.getUsability() > 0:
-            return self.__heal
-        return 0
-        
-    def use(self, explorator: Explorator) -> None:
         if super().use():
-            explorator.setHeal(self.getHeal())
+            return self.getHeal()
+        return 0
             
     def tostring(self) -> str:
         return f'Cure: [Heal: {self.getHeal()}, Usability: {self.getUsability()}]'
