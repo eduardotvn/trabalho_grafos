@@ -27,7 +27,6 @@ class Play_Frame:
         self.master.title("Treasure Hunt")
 
         self.menu_label_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
-        custom_font = font.Font(family="Gabriola", size=24)
         image = Image.open(image_path)
         image = image.resize((width, height))
         photo = ImageTk.PhotoImage(image)
