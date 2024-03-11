@@ -19,5 +19,5 @@ def show_battle_menu(self, master, custom_font, enemy):
     self.fight_button.place(x=menu_pos[0] + 270, y=menu_pos[1] + 80, width=300, height=59)
 
     self.flee_button_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
-    self.flee_button = tk.Button(master, text="Fugir", image=self.flee_button_image, command=self.search_for_resources ,font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
+    self.flee_button = tk.Button(master, text="Fugir", image=self.flee_button_image, command=self.flee ,font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
     self.flee_button.place(x=menu_pos[0] + 270, y=menu_pos[1] + 180, width=300, height=59)
