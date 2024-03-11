@@ -20,6 +20,12 @@ class Creature():
         Retorna o HP da criatura.
         """
         return self.__hp
+
+    def getMaxHp(self) -> int:
+        """
+        Retorna o HP máximo permitido para a criatura.
+        """
+        return self.__HP_MAX
     
     def hasVertexValue(self) -> bool:
         """
@@ -56,8 +62,7 @@ class Creature():
 
     def setDamage(self, damage: int) -> None:
         """
-        Reduz o HP da criatura.\n
-        Desde que o dano seja positivo.\n
+        Reduz o HP da criatura, desde que o dano seja positivo.\n
         Se o dano for maior que o HP então a criatura ficará com zero de HP.
         """
         if damage <= 0:
@@ -68,8 +73,7 @@ class Creature():
     
     def setHeal(self, heal: int) -> None:
         """
-        Aumenta o HP da criatura.\n
-        Desde que o aumento seja positivo.\n
+        Aumenta o HP da criatura, desde que o aumento seja positivo.\n
         Se o aumento somado ao HP atual for maior que o HP máximo então a criatura ficará com a vida cheia.
         """
         if heal <= 0:

@@ -54,7 +54,7 @@ def  breadthFirstSearch(graph: Graph, startVertex: Vertex) -> list[int]:
     startVertex.setMark(Mark.GRAY)
 
     # enquando a fila tiver elementos a busca continua
-    while len(searchQueue) > 0:
+    while searchQueue:
         u = searchQueue.pop() # removendo o elemento mais antigo da fila
         path.append(u.getValue())
         for neighborn in graph.getAdjacentList(u):
@@ -67,7 +67,7 @@ def  breadthFirstSearch(graph: Graph, startVertex: Vertex) -> list[int]:
         
         nextValuePath = []
         nextValueFather = startVertex.getValue()
-        if len(searchQueue) > 0:
+        if searchQueue:
             '''
             Se a busca não chegou ao fim, então é gerado um caminho
             do vértice inicial até o pai do próximo vértice. 

@@ -3,26 +3,38 @@ from src.models.item import Weapon
 
 class Explorator(Creature):
 
+    TREASURE_CAPACITY = 100
+
     def __init__(self, hp: int, attack: int) -> None:
+        super().__init__(hp, attack)
         self.__weapon: Weapon = None
         self.__checks: list = []
-        super().__init__(hp, attack)
+        self.__treasurePocket: int = 0
 
-    def getWeapon(self) -> Weapon | None:
+    def attack(self) -> tuple[int, str]:
+        if self.hasWeapon():
+            self.getWeapon().use()
+        return super().attack()
+    
+    def discartWeapon(self) -> Weapon | None:
         """
-        Retorna a arma segurada pelo explorador caso ela exista.
+        Faz o explorador discartar a arma que antes segurava.\n
+        Retorna a arma usada, caso exista.
         """
-        return self.__weapon
+        return self.setWeapon(None)
+    
+    def __updateTreasure(self) -> None:
+        """
+        Atualiza a quantidade de tesouro carregado.
+        """
+        if self.hasTreasure():
+            self.__setTreasurePocket(self.__calcTreasureCapacity())
 
-    def setWeapon(self, weapon: Weapon) -> Weapon | None:
+    def hasTreasure(self) -> bool:
         """
-        Altera a arma segurada pelo explorador para a arma passada. \n
-        Retorna a arma segurada antes pelo explorador, caso exista.
+        Retorna Verdade se o explorador está carregando algum tesouro. 
         """
-        oldWeapon = self.getWeapon()    
-        self.__weapon = weapon
-        if oldWeapon:
-            return oldWeapon
+        return self.__treasurePocket != 0
 
     def hasWeapon(self) -> bool:
         """
@@ -34,14 +46,7 @@ class Explorator(Creature):
         """
         Retorna se o explorador possui pelo menos um vértice checkpoint ou não. 
         """
-        return len(self.__checks) != 0
-    
-    def setCheckpoint(self, check: int) -> None:
-        """
-        Associa o explorador ao valor de um vértice do tipo Checkpoint.\n
-        Esse valor é adicionado no início da lista de Checkpoints.
-        """
-        self.__checks.append(check)
+        return bool(self.__checks)
 
     def getCheckpoint(self) -> int | None:
         """
@@ -63,8 +68,70 @@ class Explorator(Creature):
             attack += self.getWeapon().getDamage()
         return attack
     
-    def attack(self) -> tuple[int, str]:
+    def getWeapon(self) -> Weapon | None:
+        """
+        Retorna a arma segurada pelo explorador caso ela exista.
+        """
+        return self.__weapon
+    
+    def getTreasurePocket(self) -> int:
+        """
+        Retorna a quantidade de tesouro que o explorador está carregando.
+        """
+        return self.__treasurePocket
+    
+    def setWeapon(self, weapon: Weapon) -> Weapon | None:
+        """
+        Altera a arma segurada pelo explorador para a arma passada. \n
+        Retorna a arma segurada antes pelo explorador, caso exista.
+        """
+        oldWeapon = self.getWeapon()    
+        self.__weapon = weapon
+        if weapon: self.__updateTreasure()
+        return oldWeapon
+    
+    def setCheckpoint(self, check: int) -> None:
+        """
+        Associa o explorador ao valor de um vértice do tipo Checkpoint.\n
+        Esse valor é adicionado no início da lista de Checkpoints.
+        """
+        self.__checks.append(check)
+
+    def __setTreasurePocket(self, treasure: int) -> None:
+        """
+        Altera o valor do tesouro carregado pelo explorador.
+        """
+        if treasure > 0:
+            self.__treasurePocket = treasure
+        else:
+            self.__treasurePocket = 0
+
+    def setDamage(self, damage: int) -> None:
+        super().setDamage(damage)
+        self.__updateTreasure()
+
+    def setFoundTreasure(self) -> None:
+        """
+        Deve ser chamada quando o explorador acha o tesouro.\n
+        Essa função atribui a ``treasurePocket`` a quantidade de tesouso que pode ser carregada.\n
+        Leva em consideração o HP restante e a arma segurada pelo explorador.
+        """
+        # porcentagem de HP restante
+        self.__setTreasurePocket(self.__calcTreasureCapacity())
+    
+    def __calcTreasureCapacity(self) -> int:
+        """
+        Calcula a quantidade de tesouro que pode ser carragada pelo explorador.
+        """
+        # porcentagem de HP restante
+        remainingHP: float = (1 - (self.getMaxHp() - self.getHp()) / self.getMaxHp())
+        capacity: int = int(Explorator.TREASURE_CAPACITY * remainingHP)
         if self.hasWeapon():
-            self.getWeapon().use()
-        return super().attack()
+            capacity -= self.getWeapon().getDamage()
+        return capacity
+
+    def __repr__(self) -> str:
+        if self.hasWeapon():
+            return f'Explorator(hp={self.getHp()}, attack={self.getAttack()}, weapon={self.getWeapon().tostring()}, treasurePocket={self.getTreasurePocket()}, HP_MAX={self.getMaxHp()})'
+        return f'Explorator(hp={self.getHp()}, attack={self.getAttack()}, treasurePocket={self.getTreasurePocket()}, HP_MAX={self.getMaxHp()})'
     
