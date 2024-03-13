@@ -64,7 +64,6 @@ def  breadthFirstSearch(graph: Graph, startVertex: Vertex) -> list[int]:
                 searchQueue.insert(0, neighborn)
         u.setMark(Mark.BLACK)
         
-        
         nextValuePath = []
         nextValueFather = startVertex.getValue()
         if searchQueue:
@@ -85,7 +84,7 @@ def  breadthFirstSearch(graph: Graph, startVertex: Vertex) -> list[int]:
                 '''
                 Se o último vértice do percuso está contido no caminho do vértice
                 inicial até o pai do próximo vértice da busca, então podemos usar
-                esse caminho para chegar no próximo vértice.
+                esse caminho para chegar no pai do próximo vértice.
                 '''
                 index = nextValuePath.index(lastValue)
                 for i in range(index + 1, len(nextValuePath)):
@@ -93,8 +92,10 @@ def  breadthFirstSearch(graph: Graph, startVertex: Vertex) -> list[int]:
                 break
             '''
             Caso contrário adiciona-se o pai do último vértice ao percuso.
-            Dessa forma ou chegaremos no pai do último vértice ou no vértice inicial,
-            e assim usaremos o caminho já calculado.
+            Dessa forma ou chegaremos no pai do próximo vértice ou em um vértice do caminho calculado,
+            caso em que usaremos esse caminho.
+            Isso porque o vértice inicial sempre pertence a esse caminho e o vértice inicial é
+            um ancestral comum a todos os vértices.
             '''
             lastValue = father[lastValue]
             path.append(lastValue)
