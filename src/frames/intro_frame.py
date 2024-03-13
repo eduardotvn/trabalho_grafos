@@ -23,4 +23,4 @@ class Intro_Frame:
         self.background_image.pack_forget()
         self.play_button.place_forget()
 
-        play_frame = Play_Frame(self.master, "assets/ilhaMapeada.jpg", 720, 1280)
+        Play_Frame(self.master, "assets/mapa_numerado.png", 720, 1280)

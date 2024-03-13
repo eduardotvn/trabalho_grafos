@@ -27,4 +27,4 @@ class Main_Frame:
         self.background_image.pack_forget()
         self.play_button.place_forget()
 
-        intro_frame = Intro_Frame(self.master, "assets/procuradoNickelBottoms.jpg", 720, 1280)
+        Intro_Frame(self.master, "assets/procuradoNickelBottoms.jpg", 720, 1280)

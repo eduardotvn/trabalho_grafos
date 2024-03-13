@@ -11,6 +11,7 @@ class Vertex():
         self.__minCost = None
         self.__minCostFather = None
         self.__itens = []
+        self.__checkpoint = False
 
     def getValue(self) -> int:
         """
@@ -37,6 +38,18 @@ class Vertex():
         """
         return self.__itens
     
+    def getIsCheckPoint(self) -> bool:
+        """
+        Retorna se o vértice é um CheckPoint
+        """
+        return self.__checkpoint
+    
+    def setCheckPoint(self):
+        """
+        Transforma o vértice num CheckPoint
+        """
+        self.__checkpoint = True
+
     def getMinCost(self) -> int:
         return self.__minCost
     

@@ -12,7 +12,6 @@ lives = 3
 def check_creature_on_node(current_node: int):
     global island_creatures
     for creature in island_creatures:
-        print("Criatura " + creature.__class__.__name__ +" no vertice " + str(creature.getVertexValue()))
         if creature.getVertexValue() == current_node:
             return creature
         else:
@@ -54,3 +53,11 @@ def ress_explorator(explorator: Explorator):
         explorator.setVertexValue(explorator.getCheckpoint())
     else: 
         explorator.setVertexValue(0)
+    explorator.resetDeath()
+
+def ress_enemy(enemy: Enemy, explorator_pos):
+    new_pos = randint(3, 19)
+    while new_pos == explorator_pos:
+        new_pos = randint(3, 19)
+    enemy.resetDeath()
+    enemy.setVertexValue(new_pos)
