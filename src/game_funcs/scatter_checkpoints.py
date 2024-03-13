@@ -1,4 +1,5 @@
 from src.models.graph import Graph, Vertex
+from src.models.explorator import Explorator
 import random 
 
 def scatter_cpoints(graph: Graph):
@@ -10,3 +11,8 @@ def scatter_cpoints(graph: Graph):
         print(random_point)
         points.append(random_point)
         graph.get(random_point).setCheckPoint()
+        
+def check_point(graph: Graph, explorator: Explorator, value: int):
+    if graph.get(value).getIsCheckPoint():
+        explorator.setCheckpoint(value)
+        return True

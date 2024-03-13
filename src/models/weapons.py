@@ -22,4 +22,4 @@ class Adaga(Weapon):
     USABILITY = 7
     DAMAGE = 4
     def __init__(self):
-        super().__init__(usability=3, damage=3)
+        super().__init__(Adaga.NAME, Adaga.DESCRIPTION, Adaga.USABILITY, Adaga.DAMAGE)

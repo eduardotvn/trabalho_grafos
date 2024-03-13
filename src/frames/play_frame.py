@@ -8,8 +8,9 @@ from src.game_funcs.battle import *
 from src.game_funcs.creatures_movements import *
 from src.game_funcs.get_sprites import *
 from src.frames.buttons.show_menus import *
-from src.game_funcs.scatter_checkpoints import scatter_cpoints
+from src.game_funcs.scatter_checkpoints import *
 from src.frames.buttons.vertexes_screen_pos import vertexes_on_map
+from src.game_funcs.scatter_items import *
 from tkinter import font
 
 
@@ -17,6 +18,7 @@ graph = readGraph('grafos/grafo1.txt')
 player = Explorator(50, 5)
 
 path = deepSearch(graph, graph.get(0))
+wide_path = breadthFirstSearch(graph, graph.get(0))
 index = 0
 current_pos = path[index] 
 current_vertex = graph.get(current_pos)
@@ -69,6 +71,7 @@ class Play_Frame:
             index -= 1
         current_pos = path[index]
         current_vertex = graph.get(current_pos)
+        check_point(graph, player, current_pos)
         move_creatures(graph)
         self.creature_on_vertex = check_creature_on_node(current_pos)
         if self.creature_on_vertex is not None:
@@ -97,7 +100,11 @@ class Play_Frame:
             self.ress_text.place(x=menu_pos[0] + 250, y=menu_pos[1] + 20, height=50)
 
     def search_for_resources(self):
-        print("Searching")
+        items = check_for_items(graph, current_pos)
+        if len(items) == 0:
+            print("Não há itens aqui")
+        else:
+            print(items)
 
     def toggle_menu(self):
         clear_menu(self)

@@ -12,6 +12,7 @@ class Vertex():
         self.__minCostFather = None
         self.__itens = []
         self.__checkpoint = False
+        self.__treasure = 0
 
     def getValue(self) -> int:
         """
@@ -49,6 +50,15 @@ class Vertex():
         Transforma o vértice num CheckPoint
         """
         self.__checkpoint = True
+        
+    def getHasTreasure(self):
+        """
+        Verifica se é o vértice do tesouro
+        """
+        return self.__treasure > 0 
+    
+    def setTreasure(self):
+        self.__treasure = 100
 
     def getMinCost(self) -> int:
         return self.__minCost
