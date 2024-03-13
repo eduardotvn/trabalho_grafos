@@ -8,10 +8,10 @@ weapons = [Machado(), Adaga(), Espada(), Espada()]
 def set_treasure_vertex(graph: Graph):
     graph.get(19).setTreasure()
 
-def check_treasure_vertex(graph: Graph, value: int):
-    graph.get(value).getHasTreasure()
-    
-def fetch_treasure(explorator: Explorator):
+def check_treasure_vertex(graph: Graph, explorator: Explorator, value: int):
+    treasure_vertex = graph.get(value).getHasTreasure()
+    if treasure_vertex:
+        explorator.setFoundTreasure()
     
 def scatter_item(graph: Graph):
     vertexes = []
