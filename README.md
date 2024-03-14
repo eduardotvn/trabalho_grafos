@@ -23,7 +23,7 @@ Certifique-se de ter Python 3 instalado no seu sistema. Você pode baixá-lo em 
 
 3. Crie um ambiente virtual para isolar as dependências do projeto:
     ```bash
-    python3 -m venv env
+    python -m venv env
     ```
 
 4. Ative o ambiente virtual:
