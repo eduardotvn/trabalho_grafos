@@ -3,11 +3,19 @@ from math import ceil
 
 class Creature():
     
-    def __init__(self, hp: int, attack: int) -> None:
+    def __init__(self, hp: int, attack: int, name: str, description: str) -> None:
         self.__hp = hp
         self.__HP_MAX = hp
         self.__attack = attack
         self.__vertexValue: int = None
+        self.__name = name
+        self.__description = description
+
+    def getName(self) -> str:
+        return self.__name
+    
+    def getDescription(self) -> str:
+        return self.__description
 
     def getAttack(self) -> int:
         """

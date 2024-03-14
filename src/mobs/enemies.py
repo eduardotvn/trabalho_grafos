@@ -3,53 +3,84 @@ from math import ceil
 from models import Enemy, Explorator
  
 class FormigaQuimera(Enemy):
+    NAME = 'Formiga Quimera'
+    DESCRIPTION = 'São formigas destemidas unidas, irritar uma é irritar todas'
+    __IN_RAGE = False
+
     def __init__(self) -> None:
-        super().__init__(hp=choice([15, 12, 10]), attack=choice([10, 8, 5]))
-        
-    def callHelp(self) -> None:
+        super().__init__(hp=choice([15, 12, 10]), attack=choice([10, 8, 6]), name=FormigaQuimera.NAME, description=FormigaQuimera.DESCRIPTION)
+    
+    def attack(self) -> tuple[int, str]:
+        damage, strength = super().attack()
+        if FormigaQuimera.__IN_RAGE:
+            damage += int(damage * .20)
+        return damage, strength
+    
+    def getHitFrom(self, creature) -> tuple[int, str]:
         """
-        A cada turno que a formiga não é derrotada ela 'chama' uma parceira, aumentando seu dano em 10%
-        e sua vida em 20%
+        Atribui o dano de ataque da criatura passada, se ela estiver viva.\n
+        Existe uma chance de 60% da formiga quimera charmar ajuda.\n
+        Neste caso, todas elas terão aumento de 20% de dano.
         """
-        self.__setAttack(self, (self.getAttack + (.1 * self.getAttack)))
-        self.__setHp(self, (self.getHp + (.2 * self.getHp)))
+        if randint(1, 10) > 6:
+            FormigaQuimera.__IN_RAGE = True
+        return super().getHitFrom(creature)
 
 class Onca(Enemy):
+    NAME = 'Onça Pintada'
+    DESCRIPTION = 'Extremamente rápidas e agrecivas, sua velocidade as torna um alvo difícil'
+
     def __init__(self) -> None:
-        super().__init__(hp=choice([25, 20, 15]), attack=choice([15, 12, 10]))
+        super().__init__(hp=choice([25, 20, 15]), attack=choice([15, 12, 10]), name=Onca.NAME, description=Onca.DESCRIPTION)
+
+    def getHitFrom(self, creature) -> tuple[int, str]:
+        if isinstance(creature, Enemy):
+            return super().getHitFrom(creature)
+        elif isinstance(creature, Explorator):
+            damage, strength = creature.attack()
+            damage = self.quickDodge(damage)
+            self.setDamage(damage)
+            return damage, strength
         
-    def quickDodge(self, explorator: Explorator) -> tuple[int, str, str]:
-        damage, strength = explorator.attack();
+    def quickDodge(self, damage: int) -> int:
         """
-        A onça pode desviar do ataque do explorador sendo as porcentagens:
-        F - Falhar (50%) Onça recebe 100% do dano do ataque
-        D - Desvio (40%) Onça recebe 50% do dano do ataque
+        A onça pode desviar do ataque do explorador sendo as porcentagens:\n
+        F - Falhar (70%) Onça recebe 100% do dano do ataque\n
+        D - Desvio (20%) Onça recebe 50% do dano do ataque\n
         P - Perfeito (10%) Onça não recebe dano
         """
-        dodge = choice(['F', 'F', 'F', 'F', 'F', 'F', 'D', 'D', 'D', 'D','P'])
+        dodge = choice(['F', 'F', 'F', 'F', 'F', 'F', 'F', 'D', 'D', 'P'])
         
         if dodge == 'F':
-            return damage, strength, dodge
+            return damage
         elif dodge == 'D':
-            damage = ceil(.5 * damage)
-            return damage, strength, dodge
+            return ceil(.5 * damage)
         else:
-            damage = 0
-            return damage, strength, dodge        
+            return 0
         
 class Crocodilo(Enemy):
+    NAME = 'Crocodilo'
+    DESCRIPTION = 'Poucas coisas doem mais que um boa mordida desses crocodilos'
+
     def __init__(self) -> None:
-        super().__init__(hp=choice([40, 30, 20]), attack=choice([20, 15, 10]))
+        super().__init__(hp=choice([27, 25, 20]), attack=choice([20, 15, 12]), name=Crocodilo.NAME, description=Crocodilo.DESCRIPTION)
         
-    def specialAttack(self) -> tuple[int, str]:
+    def attack(self) -> tuple[int, str]:
         """
-        Lança um dado com chance de 10% de aumentar em 50% o dano do crocodilo.\n
-        SA: Special Attack
+        Retorna o valor do dano gerado pelo ataque e sua força ('W', 'M' ou 'S').\n
+        Tando a força do ataque quando o dano são escolhidos aleatoriamente.\n
+        W - Fraco (20%)\n
+        M - Médio (60%)\n
+        S - Forte (20%)\n
+        Adicionalmente o Crocodilo pode lançar um ataque especial (10%).\n
+        Caso isso ocorra o dado gerado é aumentado em 50%.\n
+        E na força é adicionado o sufixo "S".\n
+        WS - Fraco especial\n
+        MS - Médio especial\n
+        SS - Forte especial 
         """
-        damage, strenght = self.attack()
-        teste = randint(1, 10)
-        if teste == 7:
-            damage = damage + ceil(.5 * self.getAttack)
-            strenght = 'SA'
-        return damage, strenght
+        damage, strength = super().attack()
+        if randint(1, 10) == 5:
+            damage += ceil(damage * .5)
+        return damage, strength + 'S'
         

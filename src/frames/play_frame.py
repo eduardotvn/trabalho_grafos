@@ -1,16 +1,15 @@
 from game_funcs import check_for_items, scatter_cpoints, check_point, choose_image, move_creatures, check_creature_on_node, ress_explorator, ress_enemy, battle
-from models import readGraph, Explorator
-from searches import deepSearch, breadthFirstSearch
+from models import readGraph
+from mobs import DeepExplorator, BreadthFirstExplorator
 from .buttons import clear_menu, show_battle_menu, show_clear_menu, vertexes_on_map
 from PIL import Image, ImageTk
 import tkinter as tk
 from tkinter import font
 
 graph = readGraph('grafos/grafo1.txt')
-player = Explorator(50, 5)
+player = DeepExplorator()
 
-path = deepSearch(graph, graph.get(0))
-wide_path = breadthFirstSearch(graph, graph.get(0))
+path = player.getSeach(graph, graph.get(0))
 index = 0
 current_pos = path[index] 
 current_vertex = graph.get(current_pos)

@@ -1,15 +1,24 @@
 from .creature import Creature
 from .weapon import Weapon
+from .graph import Graph, Vertex
+from typing import Callable
 
 class Explorator(Creature):
 
     TREASURE_CAPACITY = 100
 
-    def __init__(self, hp: int, attack: int) -> None:
-        super().__init__(hp, attack)
+    def __init__(self, hp: int, attack: int, name: str, description: str) -> None:
+        super().__init__(hp, attack, name, description)
         self.__weapon: Weapon = None
         self.__checks: list = []
         self.__treasurePocket: int = 0
+        self.__search: Callable[[Graph, Vertex], list[int]] = None
+    
+    def setSeach(self, search: Callable[[Graph, Vertex], list[int]]) -> None:
+        self.__search = search
+    
+    def getSeach(self, graph: Graph, vertex: Vertex) -> list[int]:
+        return self.__search(graph, vertex)
 
     def attack(self) -> tuple[int, str]:
         if self.hasWeapon():
