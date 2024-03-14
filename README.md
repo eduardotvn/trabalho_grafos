@@ -1,6 +1,6 @@
 # Exploradores de Grafos
 
-Este projeto é de um jogo feito em python sobre aventureiros que decidem explorar uma perigosa ilha a fim de tesouros lendários.
+Este projeto é um jogo feito em python sobre aventureiros que decidem explorar uma perigosa ilha a fim de tesouros lendários.
 
 Aventure-se nessa ilha repleta de criaturas hostis e perigos naturais, o que pode dar errado?  
 
