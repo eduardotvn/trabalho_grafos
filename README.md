@@ -8,6 +8,7 @@ Aventure-se nessa ilha repleta de criaturas hostis e perigos naturais, o que pod
 
 Certifique-se de ter Python 3 instalado no seu sistema. Você pode baixá-lo em <a href="https://www.python.org/downloads/" target="_blank">python.org</a>.
 
+
 ## Instalação
 
 1. Clone o repositório para o seu sistema:
