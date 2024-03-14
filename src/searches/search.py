@@ -9,7 +9,8 @@ class Mark(Enum):
 
 def deepSearch(graph: Graph, startVertex: Vertex) -> list[int]:
     """
-    Retorna uma lista de vértices a partir de uma busca em profundidade no grafo.
+    Retorna uma lista de vértices a partir de uma busca em profundidade no grafo.\n
+    A lista de vértices simula o percuso percorrido por um viajante no grafo.
     """
     def visit(graph: Graph, vertex: Vertex, searchStack: list[Vertex]) -> list[Vertex]:
         searchStack.append(vertex)
@@ -36,7 +37,8 @@ def deepSearch(graph: Graph, startVertex: Vertex) -> list[int]:
 
 def  breadthFirstSearch(graph: Graph, startVertex: Vertex) -> list[int]:
     """
-    Retorna uma lista de vértices a partir de uma busca em largura no grafo.
+    Retorna uma lista de vértices a partir de uma busca em largura no grafo.\n
+    A lista de vértices simula o percuso percorrido por um viajante no grafo.
     """
 
     # a ordem do percuso dos vértices em profundidade
