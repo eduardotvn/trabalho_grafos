@@ -3,9 +3,9 @@ from searches import deepSearch, breadthFirstSearch
 
 class DeepExplorator(Explorator):
     HP = 50
-    ATTACK = 6
+    ATTACK = 5
     NAME = 'Jhonny Deep'
-    DESCRIPTION = ''
+    DESCRIPTION = 'Jhonny sempre vai vundo para achar o que procura'
 
     def __init__(self) -> None:
         super().__init__(DeepExplorator.HP, DeepExplorator.ATTACK, DeepExplorator.NAME, DeepExplorator.DESCRIPTION)
@@ -13,11 +13,10 @@ class DeepExplorator(Explorator):
 
 class BreadthFirstExplorator(Explorator):
     HP = 60
-    ATTACK = 5
+    ATTACK = 7
     NAME = 'Large Paul'
-    DESCRIPTION = ''
+    DESCRIPTION = 'Paul sempre prefere checar todas as opções antes de seguir em frente'
 
     def __init__(self) -> None:
         super().__init__(DeepExplorator.HP, DeepExplorator.ATTACK, DeepExplorator.NAME, DeepExplorator.DESCRIPTION)
         self.setSeach(breadthFirstSearch)
-
