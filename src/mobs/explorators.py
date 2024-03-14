@@ -15,7 +15,7 @@ class BreadthFirstExplorator(Explorator):
     HP = 60
     ATTACK = 7
     NAME = 'Large Paul'
-    DESCRIPTION = 'Paul sempre prefere checar todas as opções antes de seguir em frente'
+    DESCRIPTION = 'Paul sempre prefere checar todas as opções antes de adentar mais afundo'
 
     def __init__(self) -> None:
         super().__init__(DeepExplorator.HP, DeepExplorator.ATTACK, DeepExplorator.NAME, DeepExplorator.DESCRIPTION)
