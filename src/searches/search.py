@@ -1,4 +1,4 @@
-from src.models.graph import Graph, Vertex
+from models import Graph, Vertex
 from enum import Enum
 from random import choice
 

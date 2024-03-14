@@ -1,7 +1,6 @@
+from models import Graph, Explorator
+from itens import Machado, Adaga, Espada
 import random
-from src.models.graph import * 
-from src.models.weapons import *
-from src.models.explorator import *
 
 weapons = [Machado(), Adaga(), Espada(), Espada()]
 

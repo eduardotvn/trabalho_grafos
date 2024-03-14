@@ -1,9 +1,7 @@
-from src.models.graph import *
-import random
-from src.models.enemy import *
-from src.game_funcs.battle import *
-from src.models.creature import Creature
-from src.models.explorator import Explorator
+from models import Explorator, Graph, Enemy
+from mobs import Onca, Crocodilo, FormigaQuimera
+from random import randint
+from .battle import battle
 
 island_creatures = [Onca(), Crocodilo(), FormigaQuimera(), FormigaQuimera(), FormigaQuimera()]
 
@@ -24,7 +22,7 @@ def move_creatures(graph: Graph):
         if creature.hasVertexValue():
             move_creature(creature, graph)
         else:
-            creature.setVertexValue(random.randint(3, 19))
+            creature.setVertexValue(randint(3, 19))
     
     different_vertex = []
     for creature in island_creatures: 
@@ -43,7 +41,7 @@ def move_creatures(graph: Graph):
 def move_creature(creature, graph: Graph):
         creature_vertex = graph.get(creature.getVertexValue())
         adjacent_list = graph.getAdjacentList(creature_vertex)
-        random_vertex = random.randint(0, len(adjacent_list))
+        random_vertex = randint(0, len(adjacent_list))
         if random_vertex == len(adjacent_list):
             return
         creature.setVertexValue(adjacent_list[random_vertex].getValue())

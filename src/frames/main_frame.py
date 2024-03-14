@@ -1,7 +1,6 @@
 import tkinter as tk
 from PIL import Image, ImageTk
-from src.frames.play_frame import Play_Frame
-from src.frames.intro_frame import Intro_Frame
+from .intro_frame import Intro_Frame
 
 image_path = "assets/mapaIlha.jpg"
 

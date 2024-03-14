@@ -1,4 +1,4 @@
-from src.models.item import Weapon
+from models import Weapon
 
 class Espada(Weapon):
     NAME = 'Espada Enferrujada'

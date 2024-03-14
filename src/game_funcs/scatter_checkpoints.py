@@ -1,5 +1,4 @@
-from src.models.graph import Graph, Vertex
-from src.models.explorator import Explorator
+from models import Explorator, Graph
 import random 
 
 def scatter_cpoints(graph: Graph):

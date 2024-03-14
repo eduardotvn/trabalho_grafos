@@ -1,6 +1,4 @@
-from src.models.creature import Creature
-from src.models.explorator import Explorator
-from src.models.enemy import Enemy
+from models import Explorator, Enemy, Creature
 from dataclasses import dataclass, field
 from enum import Enum
 

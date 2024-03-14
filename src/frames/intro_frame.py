@@ -1,6 +1,6 @@
 import tkinter as tk
 from PIL import Image, ImageTk
-from src.frames.play_frame import Play_Frame
+from .play_frame import Play_Frame
 
 class Intro_Frame:
     def __init__(self, master, image_path, height, width):

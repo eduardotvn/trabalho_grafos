@@ -1,5 +1,5 @@
 import tkinter as tk
-from src.frames.main_frame import Main_Frame
+from frames import Main_Frame
 
 if __name__ == "__main__":
     height = 720

@@ -1,18 +1,10 @@
-import tkinter as tk
+from game_funcs import check_for_items, scatter_cpoints, check_point, choose_image, move_creatures, check_creature_on_node, ress_explorator, ress_enemy, battle
+from models import readGraph, Explorator
+from searches import deepSearch, breadthFirstSearch
+from .buttons import clear_menu, show_battle_menu, show_clear_menu, vertexes_on_map
 from PIL import Image, ImageTk
-from tkinter import PhotoImage
-from src.models.search import *
-from src.models.graph import *
-from src.models.explorator import *
-from src.game_funcs.battle import *
-from src.game_funcs.creatures_movements import *
-from src.game_funcs.get_sprites import *
-from src.frames.buttons.show_menus import *
-from src.game_funcs.scatter_checkpoints import *
-from src.frames.buttons.vertexes_screen_pos import vertexes_on_map
-from src.game_funcs.scatter_items import *
+import tkinter as tk
 from tkinter import font
-
 
 graph = readGraph('grafos/grafo1.txt')
 player = Explorator(50, 5)
