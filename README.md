@@ -6,7 +6,7 @@ Aventure-se nessa ilha repleta de criaturas hostis e perigos naturais, o que pod
 
 ## Pré-requisitos
 
-Certifique-se de ter Python 3 instalado no seu sistema. Você pode baixá-lo em [python.org](https://www.python.org/downloads/).
+Certifique-se de ter Python 3 instalado no seu sistema. Você pode baixá-lo em <a href="https://www.python.org/downloads/" target="_blank">python.org</a>.
 
 ## Instalação
 
