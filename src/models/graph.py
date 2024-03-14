@@ -72,8 +72,6 @@ class Graph():
         if (self.hasNotVertex(v)): self.addVertex(v)
         if (self.hasNotVertex(w)): self.addVertex(w)
         self.getAdjacentList(v).append(w)
-        if not self.isDirectional():
-            self.getAdjacentList(w).append(v)
         self.__m += 1
 
     def getN(self) -> int:
