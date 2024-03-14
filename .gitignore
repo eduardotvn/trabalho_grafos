@@ -1,5 +1,6 @@
 Lib/
 Scripts/
 __pycache__/
-
+venv/
+.idea/
 *.cjg
