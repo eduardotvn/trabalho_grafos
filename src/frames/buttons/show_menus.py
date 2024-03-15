@@ -112,7 +112,7 @@ def show_game_over(self, type):
     if type == 0:
         print("printei isso")
         self.game_over = tk.Button(self.master, image=self.game_over_death_image, command=self.reset_game, bd=0, borderwidth=0)
-        self.game_over.place(x=1280/2, y=720/2, width=200, height=200)
+        self.game_over.place(x=1280/2, y=720/2, width=400, height=200)
     else:
         self.game_over = tk.Button(self.master, image=self.game_over_time_image, bd=0, borderwidth=0)
-        self.game_over.place(x=1280/2, y=720/2, width=200, height=200)
+        self.game_over.place(x=1280/2, y=720/2, width=400, height=200)

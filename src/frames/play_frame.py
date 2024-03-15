@@ -81,7 +81,7 @@ class Play_Frame:
         print(player.hasWeapon())
 
     def fight(self):
-        global current_pos
+        global current_pos, index
         results = battle(player, self.creature_on_vertex)
         if(results.result == "MURDERER"):
             ress_enemy(self.creature_on_vertex, current_pos)
@@ -93,6 +93,10 @@ class Play_Frame:
                 player.discountLife()
                 self.vertex_clear()
                 toggle_menu(self, player, self.treasure_font)
+                if player.hasCheckpoint():
+                    new_pos = player.getVertexValue()
+                    current_pos = new_pos
+                    index = new_pos
                 self.reset_pos_index()
                 self.ress_text = tk.Label(self.master, text = "Você morreu, restam " + str(player.getLives()) + " vidas", font=font.Font(family="Gabriola", size=24), bg="#CDA88E")
                 self.ress_text.place(x=menu_pos[0] + 250, y=menu_pos[1] + 20, height=50)
