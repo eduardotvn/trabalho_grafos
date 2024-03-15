@@ -35,6 +35,8 @@ def clear_menu(self):
         self.procceed_button.destroy()
     if hasattr(self, 'ress_text'):
         self.ress_text.destroy()
+    if hasattr(self, 'weapon_button'):
+        self.weapon_button.destroy()
 
 def toggle_menu(self):
     clear_menu(self)
@@ -53,3 +55,20 @@ def show_found_treasure(self):
 def clear_show_found_treasure(self):
     if hasattr(self, 'found_treasure'):
         self.found_treasure.destroy()
+
+def show_items(self, items: list, custom_font, vertex, explorator):
+    menu_pos = [360, 380]
+
+    clear_menu(self)
+
+    self.weapon_background_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
+    self.weapon_button = tk.Button(self.master, text=items[0].__class__.__name__, image=self.weapon_background_image, command= lambda: get_weapon(self, explorator, items[0], vertex), font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
+    self.weapon_button.place(x=menu_pos[0] + 270, y=menu_pos[1] + 80, width=300, height=59)
+
+
+def get_weapon(self, explorator, weapon, vertex):
+    old_weapon = explorator.setWeapon(weapon)
+    vertex.removeItem(weapon)
+    if old_weapon:
+        vertex.addItem(old_weapon)
+    toggle_menu(self)

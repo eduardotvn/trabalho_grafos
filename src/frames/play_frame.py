@@ -1,7 +1,7 @@
-from game_funcs import check_for_items, scatter_cpoints, check_point, choose_image, move_creatures, check_creature_on_node, ress_explorator, ress_enemy, battle, check_treasure_vertex, set_treasure_vertex
+from game_funcs import check_for_items, scatter_cpoints, check_point, choose_image, move_creatures, check_creature_on_node, ress_explorator, ress_enemy, battle, check_treasure_vertex, set_treasure_vertex, scatter_item
 from models import readGraph
 from mobs import DeepExplorator, BreadthFirstExplorator
-from .buttons import show_battle_menu, show_clear_menu, vertexes_on_map, toggle_menu, show_found_treasure
+from .buttons import show_battle_menu, show_clear_menu, vertexes_on_map, toggle_menu, show_found_treasure, show_items
 from PIL import Image, ImageTk
 import tkinter as tk
 from tkinter import font
@@ -18,6 +18,7 @@ menu_pos = [360, 380]
 move_creatures(graph)
 scatter_cpoints(graph)
 set_treasure_vertex(graph)
+scatter_item(graph)
 
 class Play_Frame:
     def __init__(self, master, image_path, height, width):
@@ -74,7 +75,7 @@ class Play_Frame:
             toggle_menu(self)
         if check_treasure_vertex(graph, player, current_pos):
             show_found_treasure(self)
-        print(player.getTreasurePocket())
+        print(player.hasWeapon())
 
     def fight(self):
         global current_pos
@@ -98,7 +99,8 @@ class Play_Frame:
         if len(items) == 0:
             print("Não há itens aqui")
         else:
-            print(items)
+            custom_font = font.Font(family="Gabriola", size=24)
+            show_items(self, items, custom_font, current_vertex, player)
         
     def set_sprite_image(self):
         img_path = choose_image(self)
