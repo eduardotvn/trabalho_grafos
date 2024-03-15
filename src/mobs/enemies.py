@@ -4,7 +4,7 @@ from models import Enemy, Explorator
  
 class FormigaQuimera(Enemy):
     NAME = 'Formiga Quimera'
-    DESCRIPTION = 'São formigas destemidas e unidas, irritar uma é irritar todas'
+    DESCRIPTION = 'São formigas destemidas e unidas, irritar uma é irritar todas.'
     __IN_RAGE = False
 
     def __init__(self) -> None:
@@ -28,7 +28,7 @@ class FormigaQuimera(Enemy):
 
 class Onca(Enemy):
     NAME = 'Onça Mítica'
-    DESCRIPTION = 'Extremamente rápidas e agrecivas, sua velocidade as torna um alvo difícil'
+    DESCRIPTION = 'Extremamente rápidas e agressivas, sua velocidade as torna um alvo difícil.'
 
     def __init__(self) -> None:
         super().__init__(hp=choice([25, 20, 15]), attack=choice([15, 12, 10]), name=Onca.NAME, description=Onca.DESCRIPTION)
@@ -60,7 +60,7 @@ class Onca(Enemy):
         
 class Crocodilo(Enemy):
     NAME = 'Crocodilo Colossal'
-    DESCRIPTION = 'Poucas coisas doem mais que uma mordida certeira desses crocodilos'
+    DESCRIPTION = 'Poucas coisas doem mais que uma mordida certeira desses crocodilos.'
 
     def __init__(self) -> None:
         super().__init__(hp=choice([27, 25, 20]), attack=choice([20, 15, 12]), name=Crocodilo.NAME, description=Crocodilo.DESCRIPTION)

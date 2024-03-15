@@ -2,7 +2,7 @@ from models import Weapon
 
 class Espada(Weapon):
     NAME = 'Espada Enferrujada'
-    DESCRIPTION = 'Há décadas essa espada vem se desgastando'
+    DESCRIPTION = 'Há décadas essa espada vem se desgastando.'
     USABILITY = 6
     DAMAGE = 8
     def __init__(self):
@@ -18,7 +18,7 @@ class Machado(Weapon):
         
 class Adaga(Weapon):
     NAME = 'Adaga Curta'
-    DESCRIPTION = 'Apesar de não ter muito alcance, supreendentemente, está em bom estado'
+    DESCRIPTION = 'Apesar de não ter muito alcance, supreendentemente, está em bom estado.'
     USABILITY = 12
     DAMAGE = 4
     def __init__(self):
