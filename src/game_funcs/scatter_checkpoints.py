@@ -15,3 +15,4 @@ def check_point(graph: Graph, explorator: Explorator, value: int):
     if graph.get(value).getIsCheckPoint():
         explorator.setCheckpoint(value)
         return True
+        

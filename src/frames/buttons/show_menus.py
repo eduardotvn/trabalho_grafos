@@ -37,14 +37,23 @@ def clear_menu(self):
         self.ress_text.destroy()
     if hasattr(self, 'weapon_button'):
         self.weapon_button.destroy()
+    if hasattr(self, 'treasure_icon'):
+        self.treasure_icon.destroy()
+    if hasattr(self, 'life_icon'):
+        self.life_icon.destroy()
+    if hasattr(self, 'game_over'):
+        self.game_over.destroy()
 
-def toggle_menu(self):
+def toggle_menu(self, explorator, custom_font):
     clear_menu(self)
 
+    show_current_treasure(self, explorator, custom_font)
+    show_current_life(self, explorator, custom_font)
     self.show_menu()
     self.clear_sprite_image()
     self.set_sprite_image()
     self.set_pos_on_frame()
+
 
 def show_found_treasure(self):
 
@@ -71,4 +80,39 @@ def get_weapon(self, explorator, weapon, vertex):
     vertex.removeItem(weapon)
     if old_weapon:
         vertex.addItem(old_weapon)
-    toggle_menu(self)
+    toggle_menu(self, explorator)
+
+def show_current_treasure(self, explorator, custom_font):
+
+    self.treasure_image = tk.PhotoImage(file= "assets/buttons/treasure_icon.png")
+    self.treasure_icon = tk.Label(self.master, text=explorator.getTreasurePocket(), image=self.treasure_image, compound=tk.CENTER, font=custom_font, height=55, width=55)
+    self.treasure_icon.place(x = 30, y = 30)
+
+def show_current_life(self, explorator, custom_font):
+
+    self.life_image = tk.PhotoImage(file= "assets/buttons/life_icon.png")
+    self.life_icon = tk.Label(self.master, text = explorator.getLives(), image=self.life_image, compound=tk.CENTER, font=custom_font, height=55, width=55)
+    self.life_icon.place(x= 30, y = 100)
+
+def show_checkpoint_saved(self):
+
+    self.found_checkpoint_image = tk.PhotoImage(file= "assets/buttons/found_checkpoint")
+    self.found_checkpoint = tk.Button(self.master, image=self.found_checkpoint_image, command= lambda: clear_show_found_checkpoint(self), bd=0, borderwidth=0)
+    self.found_checkpoint.place(x=1280/2, y=720/2, width=400, height=200)
+
+def clear_show_found_checkpoint(self):
+    if hasattr(self, 'found_checkpoint'):
+        self.found_checkpoint.destroy()
+
+def show_game_over(self, type):
+
+    self.game_over_death_image = tk.PhotoImage(file= "assets/buttons/game_over_death.png")
+    self.game_over_time_image = tk.PhotoImage(file= "assets/buttons/game_over_time.png")
+
+    if type == 0:
+        print("printei isso")
+        self.game_over = tk.Button(self.master, image=self.game_over_death_image, command=self.reset_game, bd=0, borderwidth=0)
+        self.game_over.place(x=1280/2, y=720/2, width=200, height=200)
+    else:
+        self.game_over = tk.Button(self.master, image=self.game_over_time_image, bd=0, borderwidth=0)
+        self.game_over.place(x=1280/2, y=720/2, width=200, height=200)

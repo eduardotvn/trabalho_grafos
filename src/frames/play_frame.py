@@ -1,7 +1,7 @@
 from game_funcs import check_for_items, scatter_cpoints, check_point, choose_image, move_creatures, check_creature_on_node, ress_explorator, ress_enemy, battle, check_treasure_vertex, set_treasure_vertex, scatter_item
 from models import readGraph
 from mobs import DeepExplorator, BreadthFirstExplorator
-from .buttons import show_battle_menu, show_clear_menu, vertexes_on_map, toggle_menu, show_found_treasure, show_items
+from .buttons import show_battle_menu, show_clear_menu, vertexes_on_map, toggle_menu, show_found_treasure, show_items, show_current_treasure, show_current_life, show_game_over
 from PIL import Image, ImageTk
 import tkinter as tk
 from tkinter import font
@@ -45,6 +45,9 @@ class Play_Frame:
         self.menu_bar_label.pack()
         self.menu_bar_label.place(x=menu_pos[0], y=menu_pos[1], width=718, height=318)
 
+        self.treasure_font = font.Font(family="Gabriola", size=48)
+        show_current_treasure(self, player, self.treasure_font)
+        show_current_life(self, player, self.treasure_font)
         self.set_pos_on_frame()
         self.show_menu()
         self.set_sprite_image()
@@ -69,10 +72,10 @@ class Play_Frame:
         self.creature_on_vertex = check_creature_on_node(current_pos)
         if self.creature_on_vertex is not None:
             self.clear_vertex = False
-            toggle_menu(self)
+            toggle_menu(self, player, self.treasure_font)
         else:
             self.clear_vertex = True
-            toggle_menu(self)
+            toggle_menu(self, player, self.treasure_font)
         if check_treasure_vertex(graph, player, current_pos):
             show_found_treasure(self)
         print(player.hasWeapon())
@@ -83,16 +86,19 @@ class Play_Frame:
         if(results.result == "MURDERER"):
             ress_enemy(self.creature_on_vertex, current_pos)
             self.vertex_clear()
-            toggle_menu(self)
+            toggle_menu(self, player, self.treasure_font)
         elif(results.result == "DIED"):
             if(player.getLives() > 0):
                 ress_explorator(player)
                 player.discountLife()
-            self.vertex_clear()
-            toggle_menu(self)
-            self.reset_pos_index()
-            self.ress_text = tk.Label(self.master, text = "Você morreu, restam " + str(player.getLives()) + " vidas", font=font.Font(family="Gabriola", size=24), bg="#CDA88E")
-            self.ress_text.place(x=menu_pos[0] + 250, y=menu_pos[1] + 20, height=50)
+                self.vertex_clear()
+                toggle_menu(self, player, self.treasure_font)
+                self.reset_pos_index()
+                self.ress_text = tk.Label(self.master, text = "Você morreu, restam " + str(player.getLives()) + " vidas", font=font.Font(family="Gabriola", size=24), bg="#CDA88E")
+                self.ress_text.place(x=menu_pos[0] + 250, y=menu_pos[1] + 20, height=50)
+            else:
+                show_game_over(self, 0)
+
 
     def search_for_resources(self):
         items = check_for_items(graph, current_pos)
@@ -127,3 +133,20 @@ class Play_Frame:
         self.player_pos_img = tk.PhotoImage(file = "assets/buttons/player_pos.png")
         self.player_pos = tk.Label(self.master, image= self.player_pos_img, bd=0)
         self.player_pos.place(x = vertexes_on_map[current_pos][0], y = vertexes_on_map[current_pos][1], width=16, height=16)
+
+    def reset_game(self):
+        global graph, player, index, path, current_pos, current_vertex
+        graph = readGraph('grafos/grafo1.txt')
+        player = DeepExplorator()
+        path = player.getSeach(graph, graph.get(0))
+        index = 0
+        current_pos = path[index] 
+        current_vertex = graph.get(current_pos)
+
+        move_creatures(graph)
+        scatter_cpoints(graph)
+        set_treasure_vertex(graph)
+        scatter_item(graph)
+
+        toggle_menu(self, player, self.treasure_font)
+
