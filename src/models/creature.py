@@ -12,9 +12,15 @@ class Creature():
         self.__description = description
 
     def getName(self) -> str:
+        """
+        Retorna o nome da criatura.
+        """
         return self.__name
     
     def getDescription(self) -> str:
+        """
+        Retorna uma descrição da criatura.
+        """
         return self.__description
 
     def getAttack(self) -> int:
@@ -87,7 +93,7 @@ class Creature():
         if heal <= 0:
             return
         if heal + self.getHp() > self.__HP_MAX:
-            self.__setHp(self.__HP_MAX)
+            heal = self.__HP_MAX - self.getHp()
         self.__setHp(self.getHp() + heal)
     
     def isDead(self) -> bool:
