@@ -18,5 +18,5 @@ class BreadthFirstExplorator(Explorator):
     DESCRIPTION = 'Paul sempre prefere checar todas as opções antes de seguir em frente'
 
     def __init__(self) -> None:
-        super().__init__(DeepExplorator.HP, DeepExplorator.ATTACK, DeepExplorator.NAME, DeepExplorator.DESCRIPTION)
+        super().__init__(BreadthFirstExplorator.HP, BreadthFirstExplorator.ATTACK, BreadthFirstExplorator.NAME, BreadthFirstExplorator.DESCRIPTION)
         self.setSeach(breadthFirstSearch)

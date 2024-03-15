@@ -1,7 +1,7 @@
-from game_funcs import check_for_items, scatter_cpoints, check_point, choose_image, move_creatures, check_creature_on_node, ress_explorator, ress_enemy, battle
+from game_funcs import check_for_items, scatter_cpoints, check_point, choose_image, move_creatures, check_creature_on_node, ress_explorator, ress_enemy, battle, check_treasure_vertex, set_treasure_vertex
 from models import readGraph
 from mobs import DeepExplorator, BreadthFirstExplorator
-from .buttons import clear_menu, show_battle_menu, show_clear_menu, vertexes_on_map
+from .buttons import show_battle_menu, show_clear_menu, vertexes_on_map, toggle_menu, show_found_treasure
 from PIL import Image, ImageTk
 import tkinter as tk
 from tkinter import font
@@ -17,6 +17,7 @@ menu_pos = [360, 380]
 
 move_creatures(graph)
 scatter_cpoints(graph)
+set_treasure_vertex(graph)
 
 class Play_Frame:
     def __init__(self, master, image_path, height, width):
@@ -67,27 +68,29 @@ class Play_Frame:
         self.creature_on_vertex = check_creature_on_node(current_pos)
         if self.creature_on_vertex is not None:
             self.clear_vertex = False
-            self.toggle_menu()
+            toggle_menu(self)
         else:
             self.clear_vertex = True
-            self.toggle_menu()
-        print(current_pos)
+            toggle_menu(self)
+        if check_treasure_vertex(graph, player, current_pos):
+            show_found_treasure(self)
+        print(player.getTreasurePocket())
 
     def fight(self):
-        global lives, index, current_pos
+        global current_pos
         results = battle(player, self.creature_on_vertex)
         if(results.result == "MURDERER"):
             ress_enemy(self.creature_on_vertex, current_pos)
             self.vertex_clear()
-            self.toggle_menu()
+            toggle_menu(self)
         elif(results.result == "DIED"):
-            if(lives > 0):
+            if(player.getLives() > 0):
                 ress_explorator(player)
-                lives -= 1
+                player.discountLife()
             self.vertex_clear()
-            self.toggle_menu()
+            toggle_menu(self)
             self.reset_pos_index()
-            self.ress_text = tk.Label(self.master, text = "Você morreu, restam " + str(lives) + " vidas", font=font.Font(family="Gabriola", size=24), bg="#CDA88E")
+            self.ress_text = tk.Label(self.master, text = "Você morreu, restam " + str(player.getLives()) + " vidas", font=font.Font(family="Gabriola", size=24), bg="#CDA88E")
             self.ress_text.place(x=menu_pos[0] + 250, y=menu_pos[1] + 20, height=50)
 
     def search_for_resources(self):
@@ -96,14 +99,6 @@ class Play_Frame:
             print("Não há itens aqui")
         else:
             print(items)
-
-    def toggle_menu(self):
-        clear_menu(self)
-
-        self.show_menu()
-        self.clear_sprite_image()
-        self.set_sprite_image()
-        self.set_pos_on_frame()
         
     def set_sprite_image(self):
         img_path = choose_image(self)

@@ -11,6 +11,7 @@ def check_treasure_vertex(graph: Graph, explorator: Explorator, value: int):
     treasure_vertex = graph.get(value).getHasTreasure()
     if treasure_vertex:
         explorator.setFoundTreasure()
+        return True
     
 def scatter_item(graph: Graph):
     vertexes = []

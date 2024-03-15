@@ -35,3 +35,21 @@ def clear_menu(self):
         self.procceed_button.destroy()
     if hasattr(self, 'ress_text'):
         self.ress_text.destroy()
+
+def toggle_menu(self):
+    clear_menu(self)
+
+    self.show_menu()
+    self.clear_sprite_image()
+    self.set_sprite_image()
+    self.set_pos_on_frame()
+
+def show_found_treasure(self):
+
+    self.found_treasure_image = tk.PhotoImage(file="assets/buttons/found_treasure.png")
+    self.found_treasure = tk.Button(self.master, image=self.found_treasure_image, command= lambda: clear_show_found_treasure(self), bd=0, borderwidth=0)
+    self.found_treasure.place(x=1280/2, y=720/2, width=400, height=200)
+
+def clear_show_found_treasure(self):
+    if hasattr(self, 'found_treasure'):
+        self.found_treasure.destroy()

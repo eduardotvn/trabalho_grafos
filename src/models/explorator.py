@@ -12,6 +12,7 @@ class Explorator(Creature):
         self.__weapon: Weapon = None
         self.__checks: list = []
         self.__treasurePocket: int = 0
+        self.__lives: int = 3
         self.__search: Callable[[Graph, Vertex], list[int]] = None
     
     def setSeach(self, search: Callable[[Graph, Vertex], list[int]]) -> None:
@@ -19,6 +20,13 @@ class Explorator(Creature):
     
     def getSeach(self, graph: Graph, vertex: Vertex) -> list[int]:
         return self.__search(graph, vertex)
+
+    def getLives(self) -> int:
+        return self.__lives
+
+    def discountLife(self):
+        if self.__lives > 0:
+            self.__lives -= 1
 
     def attack(self) -> tuple[int, str]:
         if self.hasWeapon():
