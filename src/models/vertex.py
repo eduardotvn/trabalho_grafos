@@ -1,4 +1,5 @@
 from .item import Item
+from .trap import Trap
 
 class Vertex():
     """
@@ -8,11 +9,11 @@ class Vertex():
     def __init__(self, value) -> None:
         self.__value = value
         self.__mark = None
-        self.__minCost = None
-        self.__minCostFather = None
         self.__itens = []
         self.__checkpoint = False
         self.__treasure = False
+        self.__beginning = False
+        self.__trap = None
 
     def getValue(self) -> int:
         """
@@ -27,11 +28,6 @@ class Vertex():
         """
         return self.__mark
     
-    def setMark(self, mark) -> None:
-        """
-        Altera o valor da marca do vértice.
-        """
-        self.__mark = mark
     
     def getVertexItens(self) -> list[Item]:
         """
@@ -39,44 +35,65 @@ class Vertex():
         """
         return self.__itens
     
-    def getIsCheckPoint(self) -> bool:
+    def isCheckPoint(self) -> bool:
         """
         Retorna se o vértice é um CheckPoint
         """
         return self.__checkpoint
     
-    def setCheckPoint(self):
+    def isBeginning(self) -> bool:
         """
-        Transforma o vértice num CheckPoint
+        Retorna se o vértice é um checkpoint.
         """
-        self.__checkpoint = True
-
-    def unCheckPoint(self):
-        """
-        Remove o checkpoint do ponto
-        """
-        self.__checkpoint = False
-        
-    def getHasTreasure(self):
+        return self.__beginning
+    
+    def hasTreasure(self) -> bool:
         """
         Verifica se é o vértice do tesouro
         """
         return self.__treasure  
     
+    def hasTrap(self) -> bool:
+        """
+        Verifica se o vértice possui uma armadilha.
+        """
+        return self.__trap != None
+    
+    def setTrap(self, trap: Trap) -> None:
+        """
+        Atribui uma armadilha ao vértice.
+        """
+        self.__trap = trap
+    
+    def setBeginning(self) -> None:
+        """
+        Altera o vértice para que ele seja o começo do grafo
+        """
+        self.__beginning = True
+    
+    def setMark(self, mark) -> None:
+        """
+        Altera o valor da marca do vértice.
+        """
+        self.__mark = mark
+    
+    def setCheckPoint(self) -> None:
+        """
+        Transforma o vértice num CheckPoint
+        """
+        self.__checkpoint = True
+
+    def unSetCheckPoint(self) -> None:
+        """
+        Retira o CheckPoint do vértice.
+        """
+        self.__checkpoint = False
+
     def setTreasure(self):
+        """
+        Retorna True se o vértice contém o tesouro.
+        """
         self.__treasure = True
-
-    def getMinCost(self) -> int:
-        return self.__minCost
-    
-    def setMinCost(self, cost: int) -> None:
-        self.__minCost = cost
-
-    def getMinCostFather(self) -> int:
-        return self.__minCostFather
-    
-    def setMinCostFather(self, value: int) -> None:
-        self.__minCostFather = value
 
     def addItem(self, item: Item) -> None:
         """

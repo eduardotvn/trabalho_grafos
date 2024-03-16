@@ -33,12 +33,10 @@ def procceed(self, action: str):
     if check_treasure_vertex(get_graph(), get_player(), get_current_pos()):
         show_found_treasure(self)
 
-    check = check_point(get_graph(), get_current_pos(), get_index(), get_player())
-    if check:
+    if check_point(get_graph(), get_current_pos(), get_index(), get_player()):
         show_checkpoint_saved(self)
         get_player().setCheckpoint(get_current_pos())
         
-
 def fight(self):
     from .show_menus import toggle_menu, show_game_over
 

@@ -1,6 +1,4 @@
 from game_funcs import scatter_cpoints, choose_image, move_creatures, set_treasure_vertex, scatter_item
-from models import readGraph
-from mobs import DeepExplorator, BreadthFirstExplorator
 from .buttons import show_battle_menu, show_clear_menu, vertexes_on_map, toggle_menu, show_current_treasure, show_current_life, menu_pos, update_index, update_current_pos, update_current_vertex, reset_player, reset_graph, reset_path, get_path,get_index, get_current_pos, get_current_vertex, get_graph, get_player
 from PIL import Image, ImageTk
 import tkinter as tk

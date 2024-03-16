@@ -1,0 +1,1 @@
+from .traps import AreiaMovedica, CaminhoIngreme, PlantaCarnivora

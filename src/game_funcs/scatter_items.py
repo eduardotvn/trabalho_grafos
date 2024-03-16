@@ -1,5 +1,5 @@
 from models import Graph, Explorator
-from itens import Machado, Adaga, Espada
+from entities import Machado, Adaga, Espada
 import random
 
 weapons = [Machado(), Adaga(), Espada(), Espada()]
@@ -8,7 +8,7 @@ def set_treasure_vertex(graph: Graph):
     graph.get(19).setTreasure()
 
 def check_treasure_vertex(graph: Graph, explorator: Explorator, value: int):
-    treasure_vertex = graph.get(value).getHasTreasure()
+    treasure_vertex = graph.get(value).hasTreasure()
     if treasure_vertex:
         explorator.setFoundTreasure()
         return True

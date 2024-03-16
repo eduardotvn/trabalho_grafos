@@ -1,5 +1,5 @@
 from models import Explorator, Graph, Enemy
-from mobs import Onca, Crocodilo, FormigaQuimera
+from entities import Onca, Crocodilo, FormigaQuimera
 from random import randint
 from .battle import battle
 

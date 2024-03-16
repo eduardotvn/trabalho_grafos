@@ -1,5 +1,5 @@
 from models import readGraph
-from mobs import DeepExplorator, BreadthFirstExplorator
+from entities import DeepExplorator, BreadthFirstExplorator
 
 graph = readGraph('grafos/grafo1.txt')
 player = DeepExplorator()
