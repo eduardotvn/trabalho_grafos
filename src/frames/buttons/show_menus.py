@@ -1,12 +1,13 @@
 import tkinter as tk
+from .player_actions import fight, procceed, search_for_resources
 
 def show_clear_menu(self, master, custom_font):
     menu_pos = [360, 380]
     self.procceed_button_image = tk.PhotoImage(file="assets/buttons/procceed.png")
-    self.procceed_button = tk.Button(master, image=self.procceed_button_image, command= lambda: self.procceed("procceed"), bd=0, borderwidth=0)
+    self.procceed_button = tk.Button(master, image=self.procceed_button_image, command= lambda: procceed(self,"procceed"), bd=0, borderwidth=0)
     self.procceed_button.place(x=900, y = 720 / 1.15, width=100, height=48)
 
-    self.search_resources = tk.Button(master, text="Procurar por recursos", font = custom_font, command = self.search_for_resources,image=self.menu_label_image, compound=tk.CENTER, bd=0, borderwidth=0)
+    self.search_resources = tk.Button(master, text="Procurar por recursos", font = custom_font, command = lambda: search_for_resources(self), image=self.menu_label_image, compound=tk.CENTER, bd=0, borderwidth=0)
     self.search_resources.place(x=menu_pos[0] + 270, y=menu_pos[1] + 60, width=300, height=59)
 
 def show_battle_menu(self, master, custom_font, enemy):
@@ -15,11 +16,11 @@ def show_battle_menu(self, master, custom_font, enemy):
     self.menu_header_text.place(x=menu_pos[0] + 250, y=menu_pos[1] + 20, height=50)
 
     self.fight_button_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
-    self.fight_button = tk.Button(master, text="Lutar!", image=self.fight_button_image, command=self.fight ,font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
+    self.fight_button = tk.Button(master, text="Lutar!", image=self.fight_button_image, command= lambda: fight(self) ,font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
     self.fight_button.place(x=menu_pos[0] + 270, y=menu_pos[1] + 80, width=300, height=59)
 
     self.flee_button_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
-    self.flee_button = tk.Button(master, text="Fugir", image=self.flee_button_image, command= lambda: self.procceed("flee") ,font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
+    self.flee_button = tk.Button(master, text="Fugir", image=self.flee_button_image, command= lambda: procceed(self, "flee") ,font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
     self.flee_button.place(x=menu_pos[0] + 270, y=menu_pos[1] + 180, width=300, height=59)
 
 def clear_menu(self):
@@ -43,6 +44,8 @@ def clear_menu(self):
         self.life_icon.destroy()
     if hasattr(self, 'game_over'):
         self.game_over.destroy()
+    if hasattr(self, 'found_checkpoint'):
+        self.found_checkpoint.destroy()
 
 def toggle_menu(self, explorator, custom_font):
     clear_menu(self)
@@ -60,6 +63,10 @@ def show_found_treasure(self):
     self.found_treasure_image = tk.PhotoImage(file="assets/buttons/found_treasure.png")
     self.found_treasure = tk.Button(self.master, image=self.found_treasure_image, command= lambda: clear_show_found_treasure(self), bd=0, borderwidth=0)
     self.found_treasure.place(x=1280/2, y=720/2, width=400, height=200)
+    
+    self.procceed_button_image = tk.PhotoImage(file="assets/buttons/procceed.png")
+    self.procceed_button = tk.Button(self.master, image=self.procceed_button_image, command= lambda: procceed(self, "procceed"), bd=0, borderwidth=0)
+    self.procceed_button.place(x=900, y = 720 / 1.15, width=100, height=48)
 
 def clear_show_found_treasure(self):
     if hasattr(self, 'found_treasure'):
@@ -71,16 +78,16 @@ def show_items(self, items: list, custom_font, vertex, explorator):
     clear_menu(self)
 
     self.weapon_background_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
-    self.weapon_button = tk.Button(self.master, text=items[0].__class__.__name__, image=self.weapon_background_image, command= lambda: get_weapon(self, explorator, items[0], vertex), font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
+    self.weapon_button = tk.Button(self.master, text=items[0].__class__.__name__, image=self.weapon_background_image, command= lambda: get_weapon(self, explorator, items[0], vertex, custom_font), font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
     self.weapon_button.place(x=menu_pos[0] + 270, y=menu_pos[1] + 80, width=300, height=59)
 
 
-def get_weapon(self, explorator, weapon, vertex):
+def get_weapon(self, explorator, weapon, vertex, custom_font):
     old_weapon = explorator.setWeapon(weapon)
     vertex.removeItem(weapon)
     if old_weapon:
         vertex.addItem(old_weapon)
-    toggle_menu(self, explorator)
+    toggle_menu(self, explorator, custom_font)
 
 def show_current_treasure(self, explorator, custom_font):
 
@@ -96,7 +103,7 @@ def show_current_life(self, explorator, custom_font):
 
 def show_checkpoint_saved(self):
 
-    self.found_checkpoint_image = tk.PhotoImage(file= "assets/buttons/found_checkpoint")
+    self.found_checkpoint_image = tk.PhotoImage(file= "assets/buttons/found_checkpoint.png")
     self.found_checkpoint = tk.Button(self.master, image=self.found_checkpoint_image, command= lambda: clear_show_found_checkpoint(self), bd=0, borderwidth=0)
     self.found_checkpoint.place(x=1280/2, y=720/2, width=400, height=200)
 
@@ -110,7 +117,6 @@ def show_game_over(self, type):
     self.game_over_time_image = tk.PhotoImage(file= "assets/buttons/game_over_time.png")
 
     if type == 0:
-        print("printei isso")
         self.game_over = tk.Button(self.master, image=self.game_over_death_image, command=self.reset_game, bd=0, borderwidth=0)
         self.game_over.place(x=1280/2, y=720/2, width=400, height=200)
     else:

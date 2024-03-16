@@ -1,24 +1,15 @@
-from game_funcs import check_for_items, scatter_cpoints, check_point, choose_image, move_creatures, check_creature_on_node, ress_explorator, ress_enemy, battle, check_treasure_vertex, set_treasure_vertex, scatter_item
+from game_funcs import scatter_cpoints, choose_image, move_creatures, set_treasure_vertex, scatter_item
 from models import readGraph
 from mobs import DeepExplorator, BreadthFirstExplorator
-from .buttons import show_battle_menu, show_clear_menu, vertexes_on_map, toggle_menu, show_found_treasure, show_items, show_current_treasure, show_current_life, show_game_over
+from .buttons import show_battle_menu, show_clear_menu, vertexes_on_map, toggle_menu, show_current_treasure, show_current_life, menu_pos, update_index, update_current_pos, update_current_vertex, reset_player, reset_graph, reset_path, get_path,get_index, get_current_pos, get_current_vertex, get_graph, get_player
 from PIL import Image, ImageTk
 import tkinter as tk
 from tkinter import font
 
-graph = readGraph('grafos/grafo1.txt')
-player = DeepExplorator()
-
-path = player.getSeach(graph, graph.get(0))
-index = 0
-current_pos = path[index] 
-current_vertex = graph.get(current_pos)
-menu_pos = [360, 380]
-
-move_creatures(graph)
-scatter_cpoints(graph)
-set_treasure_vertex(graph)
-scatter_item(graph)
+move_creatures(get_graph())
+scatter_cpoints(get_graph())
+set_treasure_vertex(get_graph())
+scatter_item(get_graph())
 
 class Play_Frame:
     def __init__(self, master, image_path, height, width):
@@ -46,8 +37,8 @@ class Play_Frame:
         self.menu_bar_label.place(x=menu_pos[0], y=menu_pos[1], width=718, height=318)
 
         self.treasure_font = font.Font(family="Gabriola", size=48)
-        show_current_treasure(self, player, self.treasure_font)
-        show_current_life(self, player, self.treasure_font)
+        show_current_treasure(self, get_player(), self.treasure_font)
+        show_current_life(self, get_player(), self.treasure_font)
         self.set_pos_on_frame()
         self.show_menu()
         self.set_sprite_image()
@@ -58,59 +49,6 @@ class Play_Frame:
             show_clear_menu(self, self.master, custom_font)
         else:
             show_battle_menu(self, self.master, custom_font, self.creature_on_vertex)
-
-    def procceed(self, action: str):
-        global index, current_pos, path, current_vertex
-        if action == "procceed":
-            index += 1
-        elif action == "flee":
-            index -= 1
-        current_pos = path[index]
-        current_vertex = graph.get(current_pos)
-        check_point(graph, player, current_pos)
-        move_creatures(graph)
-        self.creature_on_vertex = check_creature_on_node(current_pos)
-        if self.creature_on_vertex is not None:
-            self.clear_vertex = False
-            toggle_menu(self, player, self.treasure_font)
-        else:
-            self.clear_vertex = True
-            toggle_menu(self, player, self.treasure_font)
-        if check_treasure_vertex(graph, player, current_pos):
-            show_found_treasure(self)
-        print(player.hasWeapon())
-
-    def fight(self):
-        global current_pos, index
-        results = battle(player, self.creature_on_vertex)
-        if(results.result == "MURDERER"):
-            ress_enemy(self.creature_on_vertex, current_pos)
-            self.vertex_clear()
-            toggle_menu(self, player, self.treasure_font)
-        elif(results.result == "DIED"):
-            if(player.getLives() > 0):
-                ress_explorator(player)
-                player.discountLife()
-                self.vertex_clear()
-                toggle_menu(self, player, self.treasure_font)
-                if player.hasCheckpoint():
-                    new_pos = player.getVertexValue()
-                    current_pos = new_pos
-                    index = new_pos
-                self.reset_pos_index()
-                self.ress_text = tk.Label(self.master, text = "Você morreu, restam " + str(player.getLives()) + " vidas", font=font.Font(family="Gabriola", size=24), bg="#CDA88E")
-                self.ress_text.place(x=menu_pos[0] + 250, y=menu_pos[1] + 20, height=50)
-            else:
-                show_game_over(self, 0)
-
-
-    def search_for_resources(self):
-        items = check_for_items(graph, current_pos)
-        if len(items) == 0:
-            print("Não há itens aqui")
-        else:
-            custom_font = font.Font(family="Gabriola", size=24)
-            show_items(self, items, custom_font, current_vertex, player)
         
     def set_sprite_image(self):
         img_path = choose_image(self)
@@ -126,12 +64,12 @@ class Play_Frame:
         self.creature_on_vertex = None
 
     def reset_pos_index(self):
-        global current_pos, index
-        current_pos = 0
-        index = 0
+        update_index(0)
+        update_current_pos
+        update_current_vertex
 
     def set_pos_on_frame(self):
-        global current_pos
+        current_pos = get_current_pos()
         if hasattr(self, 'player_pos'):
             self.player_pos.destroy()
         self.player_pos_img = tk.PhotoImage(file = "assets/buttons/player_pos.png")
@@ -139,18 +77,17 @@ class Play_Frame:
         self.player_pos.place(x = vertexes_on_map[current_pos][0], y = vertexes_on_map[current_pos][1], width=16, height=16)
 
     def reset_game(self):
-        global graph, player, index, path, current_pos, current_vertex
-        graph = readGraph('grafos/grafo1.txt')
-        player = DeepExplorator()
-        path = player.getSeach(graph, graph.get(0))
-        index = 0
-        current_pos = path[index] 
-        current_vertex = graph.get(current_pos)
+        reset_player()
+        reset_graph()
+        reset_path()
+        update_index(0)
+        update_current_pos() 
+        update_current_vertex()
 
-        move_creatures(graph)
-        scatter_cpoints(graph)
-        set_treasure_vertex(graph)
-        scatter_item(graph)
+        move_creatures(get_graph())
+        scatter_cpoints(get_graph())
+        set_treasure_vertex(get_graph())
+        scatter_item(get_graph())
 
-        toggle_menu(self, player, self.treasure_font)
+        toggle_menu(self, get_player(), self.treasure_font)
 

@@ -27,7 +27,6 @@ def move_creatures(graph: Graph):
     different_vertex = []
     for creature in island_creatures: 
         if creature.getVertexValue() not in different_vertex:
-            print(different_vertex)
             different_vertex.append(creature.getVertexValue())
         else: 
             results = battle(creature, island_creatures[different_vertex.index(creature.getVertexValue())])
@@ -59,3 +58,4 @@ def ress_enemy(enemy: Enemy, explorator_pos):
         new_pos = randint(3, 19)
     enemy.resetDeath()
     enemy.setVertexValue(new_pos)
+

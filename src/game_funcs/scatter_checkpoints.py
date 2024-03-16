@@ -10,7 +10,9 @@ def scatter_cpoints(graph: Graph):
         print(random_point)
         points.append(random_point)
         graph.get(random_point).setCheckPoint()
-        
+    
+    print(points)
+
 def check_point(graph: Graph, explorator: Explorator, value: int):
     if graph.get(value).getIsCheckPoint():
         explorator.setCheckpoint(value)
