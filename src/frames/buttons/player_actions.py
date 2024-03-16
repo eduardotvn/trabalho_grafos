@@ -40,7 +40,7 @@ def procceed(self, action: str):
         
 
 def fight(self):
-    from .show_menus import toggle_menu, show_game_over
+    from .show_menus import show_game_over
 
     results = battle(get_player(), self.creature_on_vertex)
 
@@ -56,30 +56,41 @@ def fight(self):
                 ress_on_beginning(self)
         else:
             show_game_over(self, 0)
-    elif(results.result == "BOTH_DIED"):
-        both_died(self)
     
 
 def search_for_resources(self):
     from .show_menus import show_items
     items = check_for_items(get_graph(), get_current_pos())
-    if len(items) == 0:
-        print("Não há itens aqui")
-    else:
-        custom_font = font.Font(family="Gabriola", size=24)
-        show_items(self, items, custom_font, get_current_vertex(), get_player())
+    custom_font = font.Font(family="Gabriola", size=24)
 
-def both_died(self):
-    from .show_menus import toggle_menu, show_game_over
-    if(get_player().getLives() > 1):
-        on_enemy_murdered()
-        get_player().discountLife()
-        if get_player().hasCheckpoint():
-            ress_on_checkpoint(self)
+    def weapons(x):
+        from models import Weapon
+        if issubclass(x.__class__, Weapon):
+            return True
         else:
-            ress_on_beginning(self)
+            return False
+        
+    def cures(x):
+        from models import Cure
+        if issubclass(x.__class__, Cure):
+            return True
+        else:
+            return False
+
+    weapons_arr = []
+    cures_arr = []
+    if len(items) > 0:
+        weapons_filter = filter(weapons, items)
+        cures_filter = filter(cures, items)
+        for weapon in weapons_filter:
+            weapons_arr.append(weapon)
+        for cure in cures_filter:
+            cures_arr.append(cure)
+
+    if len(weapons_arr) == 0:
+        show_items(self, [], custom_font, get_current_vertex(), get_player())
     else:
-        show_game_over(self, 0)
+        show_items(self, weapons_arr, custom_font, get_current_vertex(), get_player())
 
 def on_enemy_murdered(self):
     from .show_menus import toggle_menu

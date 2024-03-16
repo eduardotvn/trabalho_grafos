@@ -14,8 +14,6 @@ def scatter_cpoints(graph: Graph):
         points.append(random_point)
         graph.get(random_point).setCheckPoint()
     
-    print(points)
-
 def check_point(graph: Graph, value: int, index: int, explorator: Explorator):
     """
     Checa se o vértice é local de checkpoint

@@ -23,30 +23,6 @@ def show_battle_menu(self, master, custom_font, enemy):
     self.flee_button = tk.Button(master, text="Fugir", image=self.flee_button_image, command= lambda: procceed(self, "flee") ,font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
     self.flee_button.place(x=menu_pos[0] + 270, y=menu_pos[1] + 180, width=300, height=59)
 
-def clear_menu(self):
-    if hasattr(self, 'menu_header_text'):
-        self.menu_header_text.destroy()
-    if hasattr(self, 'fight_button'):
-        self.fight_button.destroy()
-    if hasattr(self, 'flee_button'):
-        self.flee_button.destroy()
-    if hasattr(self, 'search_resources'):
-        self.search_resources.destroy()
-    if hasattr(self, 'procceed_button'):
-        self.procceed_button.destroy()
-    if hasattr(self, 'ress_text'):
-        self.ress_text.destroy()
-    if hasattr(self, 'weapon_button'):
-        self.weapon_button.destroy()
-    if hasattr(self, 'treasure_icon'):
-        self.treasure_icon.destroy()
-    if hasattr(self, 'life_icon'):
-        self.life_icon.destroy()
-    if hasattr(self, 'game_over'):
-        self.game_over.destroy()
-    if hasattr(self, 'found_checkpoint'):
-        self.found_checkpoint.destroy()
-
 def toggle_menu(self, explorator, custom_font):
     clear_menu(self)
 
@@ -56,7 +32,6 @@ def toggle_menu(self, explorator, custom_font):
     self.clear_sprite_image()
     self.set_sprite_image()
     self.set_pos_on_frame()
-
 
 def show_found_treasure(self):
 
@@ -71,15 +46,29 @@ def show_found_treasure(self):
 def clear_show_found_treasure(self):
     if hasattr(self, 'found_treasure'):
         self.found_treasure.destroy()
+    if hasattr(self, 'procceed_button'):
+        self.procceed_button.destroy()
 
 def show_items(self, items: list, custom_font, vertex, explorator):
     menu_pos = [360, 380]
 
     clear_menu(self)
-
     self.weapon_background_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
-    self.weapon_button = tk.Button(self.master, text=items[0].__class__.__name__, image=self.weapon_background_image, command= lambda: get_weapon(self, explorator, items[0], vertex, custom_font), font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
-    self.weapon_button.place(x=menu_pos[0] + 270, y=menu_pos[1] + 80, width=300, height=59)
+    self.no_weapon_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
+    if len(items) > 0:
+        self.weapon_button = tk.Button(self.master, text=items[0].__class__.__name__, image=self.weapon_background_image, command= lambda: get_weapon(self, explorator, items[0], vertex, custom_font), font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
+        self.weapon_button.place(x=menu_pos[0] + 270, y=menu_pos[1] + 80, width=300, height=59)
+
+        self.procceed_button_image = tk.PhotoImage(file="assets/buttons/procceed.png")
+        self.procceed_button = tk.Button(self.master, image=self.procceed_button_image, command= lambda: procceed(self, "procceed"), bd=0, borderwidth=0)
+        self.procceed_button.place(x=900, y = 720 / 1.15, width=100, height=48)
+    else:
+        self.no_weapon = tk.Button(self.master, text="Não há itens aqui...", image=self.no_weapon_image, command = lambda: print(), font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
+        self.no_weapon.place(x=menu_pos[0] + 270, y=menu_pos[1] + 80, width=300, height=59)
+
+        self.procceed_button_image = tk.PhotoImage(file="assets/buttons/procceed.png")
+        self.procceed_button = tk.Button(self.master, image=self.procceed_button_image, command= lambda: procceed(self, "procceed"), bd=0, borderwidth=0)
+        self.procceed_button.place(x=900, y = 720 / 1.15, width=100, height=48)
 
 
 def get_weapon(self, explorator, weapon, vertex, custom_font):
@@ -122,3 +111,29 @@ def show_game_over(self, type):
     else:
         self.game_over = tk.Button(self.master, image=self.game_over_time_image, bd=0, borderwidth=0)
         self.game_over.place(x=1280/2, y=720/2, width=400, height=200)
+
+def clear_menu(self):
+    if hasattr(self, 'menu_header_text'):
+        self.menu_header_text.destroy()
+    if hasattr(self, 'fight_button'):
+        self.fight_button.destroy()
+    if hasattr(self, 'flee_button'):
+        self.flee_button.destroy()
+    if hasattr(self, 'search_resources'):
+        self.search_resources.destroy()
+    if hasattr(self, 'procceed_button'):
+        self.procceed_button.destroy()
+    if hasattr(self, 'ress_text'):
+        self.ress_text.destroy()
+    if hasattr(self, 'weapon_button'):
+        self.weapon_button.destroy()
+    if hasattr(self, 'treasure_icon'):
+        self.treasure_icon.destroy()
+    if hasattr(self, 'life_icon'):
+        self.life_icon.destroy()
+    if hasattr(self, 'game_over'):
+        self.game_over.destroy()
+    if hasattr(self, 'found_checkpoint'):
+        self.found_checkpoint.destroy()
+    if hasattr(self, 'no_weapon'):
+        self.no_weapon.destroy()

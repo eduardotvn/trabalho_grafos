@@ -22,5 +22,7 @@ def scatter_item(graph: Graph):
         vertexes.append(weapon_vertex)
         graph.get(weapon_vertex).addItem(weapons[i])
 
+    print(vertexes)
+    
 def check_for_items(graph: Graph, value: int):
     return graph.get(value).getVertexItens()
