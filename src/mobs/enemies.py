@@ -33,14 +33,13 @@ class Onca(Enemy):
     def __init__(self) -> None:
         super().__init__(hp=choice([25, 20, 15]), attack=choice([15, 12, 10]), name=Onca.NAME, description=Onca.DESCRIPTION)
 
-    def getHitFrom(self, creature) -> tuple[int, str]:
-        if isinstance(creature, Enemy):
-            return super().getHitFrom(creature)
-        elif isinstance(creature, Explorator):
+    def getHitFrom(self, creature) -> tuple[int, str]:   
+        if isinstance(creature, Explorator) and creature.isAlive():
             damage, strength = creature.attack()
             damage = self.quickDodge(damage)
             self.setDamage(damage)
             return damage, strength
+        return super().getHitFrom(creature)
         
     def quickDodge(self, damage: int) -> int:
         """
