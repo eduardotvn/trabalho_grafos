@@ -1,26 +1,26 @@
 from models import Cure
 
-class PocaoPequena(Cure):
-    NAME = 'Poção Pequena'
-    DESCRIPTION = 'Um pequeno frasco contendo um líquido de propriedades curativas, feito com plantas da ilha.'
+class CogumeloAngelical(Cure):
+    NAME = 'Cogumelo Angelical'
+    DESCRIPTION = 'Um cogumelo com um curioso formato de anjo, cresce apenas na ilha. Possui propriedades curativas.'
     USABILITY = 1
     HEAL = 10
     def __init__(self):
-        super().__init__(PocaoPequena.NAME, PocaoPequena.DESCRIPTION, PocaoPequena.USABILITY, PocaoPequena.HEAL)
+        super().__init__(CogumeloAngelical.NAME, CogumeloAngelical.DESCRIPTION, CogumeloAngelical.USABILITY, CogumeloAngelical.HEAL)
         
-class PocaoMedia(Cure):
-    NAME = 'Poção Média'
-    DESCRIPTION = 'Um frasco contendo um líquido de propriedades curativas, feito com plantas da ilha.'
-    USABILITY = 2
-    HEAL = 10
+class PingoDaLua(Cure):
+    NAME = 'Pingo da Lua'
+    DESCRIPTION = 'Uma bela flor branca, contam as lendas que nasce quando uma gota de água cai da Lua. Possui propriedades curativas.'
+    USABILITY = 1
+    HEAL = 15
     def __init__(self):
-        super().__init__(PocaoMedia.NAME, PocaoMedia.DESCRIPTION, PocaoMedia.USABILITY, PocaoMedia.HEAL)
+        super().__init__(PingoDaLua.NAME, PingoDaLua.DESCRIPTION, PingoDaLua.USABILITY, PingoDaLua.HEAL)
     
-class PocaoGrande(Cure):
-    NAME = 'Poção Grande'
-    DESCRIPTION = 'Um grande frasco contendo um líquido de propriedades curativas, feito com plantas da ilha.'
-    USABILITY = 3
-    HEAL = 10
+class PomosDeOuro(Cure):
+    NAME = 'Pomos de Ouro'
+    DESCRIPTION = 'Uma fruta dourada, colhida do Jardim das Hespérides. Possui propriedades curativas.'
+    USABILITY = 1
+    HEAL = 20
     def __init__(self):
-        super().__init__(PocaoGrande.NAME, PocaoGrande.DESCRIPTION, PocaoGrande.USABILITY, PocaoGrande.HEAL)
+        super().__init__(PomosDeOuro.NAME, PomosDeOuro.DESCRIPTION, PomosDeOuro.USABILITY, PomosDeOuro.HEAL)
   
