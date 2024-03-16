@@ -123,9 +123,10 @@ class Explorator(Creature):
         else:
             self.__treasurePocket = 0
 
-    def setDamage(self, damage: int) -> None:
+    def setDamage(self, damage: int) -> int:
         super().setDamage(damage)
         self.__updateTreasure()
+        return damage
 
     def setFoundTreasure(self) -> None:
         """
