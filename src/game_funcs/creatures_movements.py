@@ -8,6 +8,9 @@ island_creatures = [Onca(), Crocodilo(), FormigaQuimera(), FormigaQuimera(), For
 lives = 3
 
 def check_creature_on_node(current_node: int):
+    """
+    Checa se há criaturas no mesmo nodo do jogador
+    """
     global island_creatures
     for creature in island_creatures:
         if creature.getVertexValue() == current_node:
@@ -16,6 +19,10 @@ def check_creature_on_node(current_node: int):
             continue 
         
 def move_creatures(graph: Graph):
+    """
+    Faz as criaturas se moverem pelo grafo\n
+    iterando seu vetor de objetos
+    """
     global island_creatures
 
     for creature in island_creatures:
@@ -38,14 +45,20 @@ def move_creatures(graph: Graph):
             
 
 def move_creature(creature, graph: Graph):
-        creature_vertex = graph.get(creature.getVertexValue())
-        adjacent_list = graph.getAdjacentList(creature_vertex)
-        random_vertex = randint(0, len(adjacent_list))
-        if random_vertex == len(adjacent_list):
-            return
-        creature.setVertexValue(adjacent_list[random_vertex].getValue())
+    """
+    Move uma criatura pelo grafo
+    """
+    creature_vertex = graph.get(creature.getVertexValue())
+    adjacent_list = graph.getAdjacentList(creature_vertex)
+    random_vertex = randint(0, len(adjacent_list))
+    if random_vertex == len(adjacent_list):
+        return
+    creature.setVertexValue(adjacent_list[random_vertex].getValue())
         
 def ress_explorator(explorator: Explorator):
+    """
+    Ressuscita o explorador
+    """
     if explorator.hasCheckpoint():
         explorator.setVertexValue(explorator.getCheckpoint())
     else: 
@@ -53,6 +66,9 @@ def ress_explorator(explorator: Explorator):
     explorator.resetDeath()
 
 def ress_enemy(enemy: Enemy, explorator_pos):
+    """
+    Ressuscita uma criatura
+    """
     new_pos = randint(3, 19)
     while new_pos == explorator_pos:
         new_pos = randint(3, 19)

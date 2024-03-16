@@ -100,7 +100,7 @@ class Creature():
         """
         Retorna Verdadeiro se a criatura estiver morta, Falso caso contrário.
         """
-        return self.getHp() == 0
+        return self.getHp() <= 0
     
     def isAlive(self) -> bool:
         """

@@ -49,6 +49,7 @@ class Play_Frame:
             show_clear_menu(self, self.master, custom_font)
         else:
             show_battle_menu(self, self.master, custom_font, self.creature_on_vertex)
+       
         
     def set_sprite_image(self):
         img_path = choose_image(self)
@@ -63,11 +64,6 @@ class Play_Frame:
         self.clear_vertex = True
         self.creature_on_vertex = None
 
-    def reset_pos_index(self):
-        update_index(0)
-        update_current_pos
-        update_current_vertex
-
     def set_pos_on_frame(self):
         current_pos = get_current_pos()
         if hasattr(self, 'player_pos'):
@@ -77,7 +73,7 @@ class Play_Frame:
         self.player_pos.place(x = vertexes_on_map[current_pos][0], y = vertexes_on_map[current_pos][1], width=16, height=16)
 
     def reset_game(self):
-        reset_player()
+        reset_player(1)
         reset_graph()
         reset_path()
         update_index(0)
@@ -88,6 +84,8 @@ class Play_Frame:
         scatter_cpoints(get_graph())
         set_treasure_vertex(get_graph())
         scatter_item(get_graph())
+
+        self.vertex_clear()
 
         toggle_menu(self, get_player(), self.treasure_font)
 

@@ -50,6 +50,12 @@ class Vertex():
         Transforma o vértice num CheckPoint
         """
         self.__checkpoint = True
+
+    def unCheckPoint(self):
+        """
+        Remove o checkpoint do ponto
+        """
+        self.__checkpoint = False
         
     def getHasTreasure(self):
         """

@@ -2,6 +2,9 @@ from models import Explorator, Graph
 import random 
 
 def scatter_cpoints(graph: Graph):
+    """
+    Espalha checkpoints pelo grafo
+    """
     points = []
     for i in range(3):
         random_point = random.randint(3, 19)
@@ -13,8 +16,15 @@ def scatter_cpoints(graph: Graph):
     
     print(points)
 
-def check_point(graph: Graph, explorator: Explorator, value: int):
+def check_point(graph: Graph, value: int, index: int, explorator: Explorator):
+    """
+    Checa se o vértice é local de checkpoint
+    """
+    from frames.buttons.global_variables import update_checkpoint
     if graph.get(value).getIsCheckPoint():
-        explorator.setCheckpoint(value)
+        if explorator.hasCheckpoint():
+            explorator.getCheckpoint()
+        graph.get(value).unCheckPoint()
+        update_checkpoint(index)
         return True
     
