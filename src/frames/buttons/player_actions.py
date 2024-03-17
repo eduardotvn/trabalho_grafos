@@ -1,5 +1,5 @@
 from game_funcs import check_for_items, check_point, move_creatures, check_creature_on_node, ress_explorator, ress_enemy, battle, check_treasure_vertex
-from .global_variables import menu_pos, update_index, update_current_vertex, update_current_pos, get_path, get_index, get_current_pos, get_current_vertex, get_graph, get_player, get_checkpoint_index
+from .global_variables import menu_pos, update_index, update_current_pos, get_index, get_current_pos, get_current_vertex, get_graph, get_player, get_checkpoint_index
 import tkinter as tk
 from tkinter import font
 
@@ -75,20 +75,16 @@ def search_for_resources(self):
         else:
             return False
 
-    weapons_arr = []
-    cures_arr = []
+    filtered_arr = []
     if len(items) > 0:
         weapons_filter = filter(weapons, items)
         cures_filter = filter(cures, items)
         for weapon in weapons_filter:
-            weapons_arr.append(weapon)
+            filtered_arr.append(weapon)
         for cure in cures_filter:
-            cures_arr.append(cure)
+            filtered_arr.append(cure)
 
-    if len(weapons_arr) == 0:
-        show_items(self, [], custom_font, get_current_vertex(), get_player())
-    else:
-        show_items(self, weapons_arr, custom_font, get_current_vertex(), get_player())
+    show_items(self, filtered_arr, custom_font, get_current_vertex(), get_player())
 
 def on_enemy_murdered(self):
     from .show_menus import toggle_menu

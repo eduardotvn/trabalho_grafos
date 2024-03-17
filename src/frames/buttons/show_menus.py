@@ -1,14 +1,5 @@
 import tkinter as tk
-from .player_actions import fight, procceed, search_for_resources
-
-def show_clear_menu(self, master, custom_font):
-    menu_pos = [360, 380]
-    self.procceed_button_image = tk.PhotoImage(file="assets/buttons/procceed.png")
-    self.procceed_button = tk.Button(master, image=self.procceed_button_image, command= lambda: procceed(self,"procceed"), bd=0, borderwidth=0)
-    self.procceed_button.place(x=900, y = 720 / 1.15, width=100, height=48)
-
-    self.search_resources = tk.Button(master, text="Procurar por recursos", font = custom_font, command = lambda: search_for_resources(self), image=self.menu_label_image, compound=tk.CENTER, bd=0, borderwidth=0)
-    self.search_resources.place(x=menu_pos[0] + 270, y=menu_pos[1] + 60, width=300, height=59)
+from .player_actions import fight, procceed
 
 def show_battle_menu(self, master, custom_font, enemy):
     menu_pos = [360, 380]
@@ -22,6 +13,33 @@ def show_battle_menu(self, master, custom_font, enemy):
     self.flee_button_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
     self.flee_button = tk.Button(master, text="Fugir", image=self.flee_button_image, command= lambda: procceed(self, "flee") ,font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
     self.flee_button.place(x=menu_pos[0] + 270, y=menu_pos[1] + 180, width=300, height=59)
+
+def show_items(self, items: list, custom_font, vertex, explorator):
+    from models import Weapon
+    menu_pos = [360, 380]
+
+    self.weapon_background_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
+    self.no_weapon_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
+    if len(items) > 0:
+        print(items)
+        for i, item in enumerate(items):
+            if issubclass(item.__class__, Weapon):
+                self.weapon_button = tk.Button(self.master, text=item.__class__.__name__, image=self.weapon_background_image, command= lambda item=item: get_weapon(self, explorator, item, vertex, custom_font), font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
+                self.weapon_button.place(x=menu_pos[0] + 270, y=menu_pos[1] + 80 + 100*i, width=300, height=59)
+            else: 
+                self.cure_button = tk.Button(self.master, text=item.__class__.__name__, image=self.weapon_background_image, command= lambda item=item: get_cure(self, explorator, item, vertex, custom_font), font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
+                self.cure_button.place(x=menu_pos[0] + 270, y=menu_pos[1] + 80 + 100*i, width=300, height=59)
+
+        self.procceed_button_image = tk.PhotoImage(file="assets/buttons/procceed.png")
+        self.procceed_button = tk.Button(self.master, image=self.procceed_button_image, command= lambda: procceed(self, "procceed"), bd=0, borderwidth=0)
+        self.procceed_button.place(x=900, y = 720 / 1.15, width=100, height=48)
+    else:
+        self.no_weapon = tk.Button(self.master, text="Não há itens aqui...", image=self.no_weapon_image, command = lambda: print(), font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
+        self.no_weapon.place(x=menu_pos[0] + 270, y=menu_pos[1] + 80, width=300, height=59)
+
+        self.procceed_button_image = tk.PhotoImage(file="assets/buttons/procceed.png")
+        self.procceed_button = tk.Button(self.master, image=self.procceed_button_image, command= lambda: procceed(self, "procceed"), bd=0, borderwidth=0)
+        self.procceed_button.place(x=900, y = 720 / 1.15, width=100, height=48)
 
 def toggle_menu(self, explorator, custom_font):
     clear_menu(self)
@@ -49,27 +67,6 @@ def clear_show_found_treasure(self):
     if hasattr(self, 'procceed_button'):
         self.procceed_button.destroy()
 
-def show_items(self, items: list, custom_font, vertex, explorator):
-    menu_pos = [360, 380]
-
-    clear_menu(self)
-    self.weapon_background_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
-    self.no_weapon_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
-    if len(items) > 0:
-        self.weapon_button = tk.Button(self.master, text=items[0].__class__.__name__, image=self.weapon_background_image, command= lambda: get_weapon(self, explorator, items[0], vertex, custom_font), font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
-        self.weapon_button.place(x=menu_pos[0] + 270, y=menu_pos[1] + 80, width=300, height=59)
-
-        self.procceed_button_image = tk.PhotoImage(file="assets/buttons/procceed.png")
-        self.procceed_button = tk.Button(self.master, image=self.procceed_button_image, command= lambda: procceed(self, "procceed"), bd=0, borderwidth=0)
-        self.procceed_button.place(x=900, y = 720 / 1.15, width=100, height=48)
-    else:
-        self.no_weapon = tk.Button(self.master, text="Não há itens aqui...", image=self.no_weapon_image, command = lambda: print(), font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
-        self.no_weapon.place(x=menu_pos[0] + 270, y=menu_pos[1] + 80, width=300, height=59)
-
-        self.procceed_button_image = tk.PhotoImage(file="assets/buttons/procceed.png")
-        self.procceed_button = tk.Button(self.master, image=self.procceed_button_image, command= lambda: procceed(self, "procceed"), bd=0, borderwidth=0)
-        self.procceed_button.place(x=900, y = 720 / 1.15, width=100, height=48)
-
 
 def get_weapon(self, explorator, weapon, vertex, custom_font):
     old_weapon = explorator.setWeapon(weapon)
@@ -77,6 +74,15 @@ def get_weapon(self, explorator, weapon, vertex, custom_font):
     if old_weapon:
         vertex.addItem(old_weapon)
     toggle_menu(self, explorator, custom_font)
+
+def get_cure(self, explorator, cure, vertex, custom_font):
+
+    if explorator.getHp() == explorator.getMaxHp():
+         alert_button(self, "Sua vida está cheia", custom_font)
+    else:
+        explorator.setHeal(cure.use())
+        vertex.removeItem(cure)
+        toggle_menu(self, explorator, custom_font)
 
 def show_current_treasure(self, explorator, custom_font):
 
@@ -137,3 +143,12 @@ def clear_menu(self):
         self.found_checkpoint.destroy()
     if hasattr(self, 'no_weapon'):
         self.no_weapon.destroy()
+    if hasattr(self, 'cure_button'):
+        self.cure_button.destroy()
+    if hasattr(self, 'alert_button'):
+        self.alert_button.destroy()
+
+def alert_button(self, message, custom_font):
+    self.alert_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
+    self.alert_button = tk.Button(self.master,text = message, image = self.alert_image, command=lambda: self.alert_button.destroy(), compound=tk.CENTER, font=custom_font)
+    self.alert_button.place(x=1280/2, y=720/2, width=299, height=59)

@@ -11,8 +11,6 @@ current_pos = path[index]
 current_vertex = graph.get(current_pos)
 menu_pos = [360, 380]
 
-print(path)
-
 def update_index(value):
     """
     Atualiza o valor da variável global index
