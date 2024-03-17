@@ -1,5 +1,6 @@
 import tkinter as tk
 from .player_actions import fight, procceed
+from .clear_frames import clear_menu
 
 def show_battle_menu(self, master, custom_font, enemy):
     menu_pos = [360, 380]
@@ -46,6 +47,8 @@ def toggle_menu(self, explorator, custom_font):
 
     show_current_treasure(self, explorator, custom_font)
     show_current_life(self, explorator, custom_font)
+    show_current_hp(self, explorator, custom_font)
+    show_current_damage(self, explorator, custom_font)
     self.show_menu()
     self.clear_sprite_image()
     self.set_sprite_image()
@@ -96,6 +99,17 @@ def show_current_life(self, explorator, custom_font):
     self.life_icon = tk.Label(self.master, text = explorator.getLives(), image=self.life_image, compound=tk.CENTER, font=custom_font, height=55, width=55)
     self.life_icon.place(x= 30, y = 100)
 
+def show_current_hp(self, explorator, custom_font):
+    self.hp_image = tk.PhotoImage(file = "assets/buttons/hp_icon.png")
+    self.hp_icon = tk.Label(self.master, text = explorator.getHp(), image=self.hp_image, compound=tk.CENTER, font=custom_font, height=55, width=55)
+    self.hp_icon.place(x= 30, y = 170)
+
+def show_current_damage(self, explorator, custom_font):
+    self.damage_image = tk.PhotoImage(file = "assets/buttons/damage_icon.png")
+    self.damage_icon = tk.Label(self.master, text = explorator.getAttack(), image=self.damage_image, compound=tk.CENTER, font=custom_font, height=55, width=55)
+    self.damage_icon.place(x= 30, y = 240)
+
+
 def show_checkpoint_saved(self):
 
     self.found_checkpoint_image = tk.PhotoImage(file= "assets/buttons/found_checkpoint.png")
@@ -117,36 +131,6 @@ def show_game_over(self, type):
     else:
         self.game_over = tk.Button(self.master, image=self.game_over_time_image, bd=0, borderwidth=0)
         self.game_over.place(x=1280/2, y=720/2, width=400, height=200)
-
-def clear_menu(self):
-    if hasattr(self, 'menu_header_text'):
-        self.menu_header_text.destroy()
-    if hasattr(self, 'fight_button'):
-        self.fight_button.destroy()
-    if hasattr(self, 'flee_button'):
-        self.flee_button.destroy()
-    if hasattr(self, 'search_resources'):
-        self.search_resources.destroy()
-    if hasattr(self, 'procceed_button'):
-        self.procceed_button.destroy()
-    if hasattr(self, 'ress_text'):
-        self.ress_text.destroy()
-    if hasattr(self, 'weapon_button'):
-        self.weapon_button.destroy()
-    if hasattr(self, 'treasure_icon'):
-        self.treasure_icon.destroy()
-    if hasattr(self, 'life_icon'):
-        self.life_icon.destroy()
-    if hasattr(self, 'game_over'):
-        self.game_over.destroy()
-    if hasattr(self, 'found_checkpoint'):
-        self.found_checkpoint.destroy()
-    if hasattr(self, 'no_weapon'):
-        self.no_weapon.destroy()
-    if hasattr(self, 'cure_button'):
-        self.cure_button.destroy()
-    if hasattr(self, 'alert_button'):
-        self.alert_button.destroy()
 
 def alert_button(self, message, custom_font):
     self.alert_image = tk.PhotoImage(file="assets/buttons/menu_button.png")

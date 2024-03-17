@@ -1,5 +1,5 @@
 from game_funcs import scatter_cpoints, choose_image, move_creatures, set_treasure_vertex, scatter_item
-from .buttons import show_battle_menu, vertexes_on_map, toggle_menu, show_current_treasure, show_current_life, menu_pos, update_index, update_current_pos, update_current_vertex, reset_player, reset_graph, reset_path, get_path,get_index, get_current_pos, get_current_vertex, get_graph, get_player, search_for_resources
+from .buttons import show_battle_menu, vertexes_on_map, toggle_menu, show_current_treasure, show_current_life, menu_pos, update_index, update_current_pos, update_current_vertex, reset_player, reset_graph, reset_path, get_current_pos, get_graph, get_player, search_for_resources, show_current_hp, show_current_damage
 from PIL import Image, ImageTk
 import tkinter as tk
 from tkinter import font
@@ -37,6 +37,8 @@ class Play_Frame:
         self.treasure_font = font.Font(family="Gabriola", size=48)
         show_current_treasure(self, get_player(), self.treasure_font)
         show_current_life(self, get_player(), self.treasure_font)
+        show_current_hp(self, get_player(), self.treasure_font)
+        show_current_damage(self, get_player(), self.treasure_font)
         self.set_pos_on_frame()
         self.show_menu()
         self.set_sprite_image()
