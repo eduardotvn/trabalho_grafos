@@ -131,5 +131,7 @@ def set_sprite_image(self):
 
 def show_victory(self, explorator, custom_font):
     self.victory_image = tk.PhotoImage(file="assets/victory_frame.png")
-    self.victory_button = tk.Button(self.master,text = "Você conseguiu fugir com " + str(explorator.getTreasurePocket()) + " do tesouro!", image = self.victory_image, command=lambda: self.reset_game, compound=tk.CENTER, font=custom_font, pady=50)
-    self.victory_button.place(x=1280/2, y=200, width=399, height=399)
+    self.victory_button = tk.Button(self.master, image = self.victory_image, command=lambda: self.reset_game)
+    self.victory_text = tk.Label(self.master, text="Você conseguiu fugir com " + str(explorator.getTreasurePocket()) + "% do tesouro!", font=custom_font, fg="black", bg="#773900")
+    self.victory_button.place(x=500, y=200, width=399, height=399)
+    self.victory_text.place(x = 510, y = 500)

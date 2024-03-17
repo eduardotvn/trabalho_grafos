@@ -36,6 +36,7 @@ class Play_Frame:
 
         self.custom_font = font.Font(family="Gabriola", size=24)
         self.treasure_font = font.Font(family="Gabriola", size=48)
+        self.victory_font = font.Font(family="Gabriola", size=18, weight='bold')
         show_icons(self, get_player(), self.treasure_font)
         self.set_pos_on_frame()
         self.show_menu()

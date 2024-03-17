@@ -36,7 +36,7 @@ def procceed(self, action: str):
             get_player().setCheckpoint(get_current_pos())
         
         if(get_index() == len(get_path()) - 1):
-            show_victory(self, get_player(), self.treasure_font)
+            show_victory(self, get_player(), self.victory_font)
     
 def fight(self):
     from .show_menus import show_game_over
