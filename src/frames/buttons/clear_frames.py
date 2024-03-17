@@ -17,6 +17,8 @@ def clear_menu(self):
         self.game_over.destroy()
     if hasattr(self, 'found_checkpoint'):
         self.found_checkpoint.destroy()
+    if hasattr(self, 'found_treasure'):
+        self.found_treasure.destroy()
     if hasattr(self, 'no_weapon'):
         self.no_weapon.destroy()
     if hasattr(self, 'cure_button'):

@@ -57,11 +57,6 @@ def show_found_treasure(self):
     self.found_treasure_image = tk.PhotoImage(file="assets/buttons/found_treasure.png")
     self.found_treasure = tk.Button(self.master, image=self.found_treasure_image, command=lambda: self.found_treasure.destroy(), bd=0, borderwidth=0)
     self.found_treasure.place(x=1280/2, y=720/2, width=400, height=200)
-    
-    self.procceed_button_image = tk.PhotoImage(file="assets/buttons/procceed.png")
-    self.procceed_button = tk.Button(self.master, image=self.procceed_button_image, command= lambda: procceed(self, "procceed"), bd=0, borderwidth=0)
-    self.procceed_button.place(x=900, y = 720 / 1.15, width=100, height=48)
-
 
 def get_weapon(self, explorator, weapon, vertex, custom_font):
     old_weapon = explorator.setWeapon(weapon)
