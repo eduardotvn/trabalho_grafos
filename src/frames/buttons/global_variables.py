@@ -5,13 +5,12 @@ graph = readGraph('grafos/grafo1.txt')
 player = DeepExplorator()
 
 path = player.getSeach(graph, graph.get(0))
+graph.get(0).setBeginning()
 index = 0
 checkpoint_index = 0
 current_pos = path[index] 
 current_vertex = graph.get(current_pos)
 menu_pos = [360, 380]
-
-print(path)
 
 def update_index(value):
     """

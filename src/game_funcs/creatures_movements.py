@@ -1,11 +1,9 @@
-from models import Explorator, Graph, Enemy
+from models import Explorator, Graph, Enemy, Creature
 from entities import Onca, Crocodilo, FormigaQuimera
-from random import randint
+from random import randint, choice
 from .battle import battle
 
 island_creatures = [Onca(), Crocodilo(), FormigaQuimera(), FormigaQuimera(), FormigaQuimera()]
-
-lives = 3
 
 def check_creature_on_node(current_node: int):
     """
@@ -18,6 +16,16 @@ def check_creature_on_node(current_node: int):
         else:
             continue 
         
+def chooseVertex(graph: Graph) -> int:
+    """
+    Escolhe um vértice do grafo elegível para o spawn de criaturas.
+    """
+    vertexs = list(graph.getVertexs())
+    vertex = choice(vertexs)
+    while vertex.isBeginning() or vertex.isCheckPoint():
+        vertex = choice(vertexs)
+    return vertex.getValue()
+
 def move_creatures(graph: Graph):
     """
     Faz as criaturas se moverem pelo grafo\n
@@ -29,7 +37,7 @@ def move_creatures(graph: Graph):
         if creature.hasVertexValue():
             move_creature(creature, graph)
         else:
-            creature.setVertexValue(randint(3, 19))
+            creature.setVertexValue(chooseVertex(graph))
     
     different_vertex = []
     for creature in island_creatures: 
@@ -43,21 +51,22 @@ def move_creatures(graph: Graph):
                 results.loser.resetDeath()
                 results.loser.setVertexValue(randint(3, 19))
             
-
-def move_creature(creature, graph: Graph):
+def move_creature(creature: Creature, graph: Graph):
     """
-    Move uma criatura pelo grafo
+    Move uma criatura pelo grafo.
     """
     creature_vertex = graph.get(creature.getVertexValue())
-    adjacent_list = graph.getAdjacentList(creature_vertex)
-    random_vertex = randint(0, len(adjacent_list))
-    if random_vertex == len(adjacent_list):
-        return
-    creature.setVertexValue(adjacent_list[random_vertex].getValue())
+    adjacent_list = graph.getAdjacentList(creature_vertex).copy() # Cópia da lista de adjacência
+    adjacent_list.append(creature_vertex) # A criatura pode escolher ficar no seu vértice atual
+    for vertex in adjacent_list:
+        if vertex.isCheckPoint() or vertex.isBeginning():
+            adjacent_list.remove(vertex)
+    random_vertex = choice(adjacent_list)
+    creature.setVertexValue(random_vertex.getValue())
         
 def ress_explorator(explorator: Explorator):
     """
-    Ressuscita o explorador
+    Ressuscita o explorador.
     """
     if explorator.hasCheckpoint():
         explorator.setVertexValue(explorator.getCheckpoint())
