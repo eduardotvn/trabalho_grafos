@@ -1,5 +1,5 @@
 from game_funcs import check_for_items, check_point, move_creatures, check_creature_on_node, ress_explorator, ress_enemy, battle, check_treasure_vertex
-from .global_variables import menu_pos, update_index, update_current_pos, get_index, get_current_pos, get_current_vertex, get_graph, get_player, get_checkpoint_index
+from .global_variables import menu_pos, update_index, update_current_pos, get_index, get_current_pos, get_current_vertex, get_graph, get_player, get_checkpoint_index, get_path
 import tkinter as tk
 from tkinter import font
 
@@ -11,31 +11,32 @@ def procceed(self, action: str):
     encarrega de atualizar as posições e checar \n
     possíveis criaturas e checkpoints.
     """
-    from .show_menus import toggle_menu, show_found_treasure, show_checkpoint_saved
+    from .show_menus import toggle_menu, show_found_treasure, show_checkpoint_saved, show_victory
     index = get_index()
-    if action == "procceed":
-        update_index(index + 1)
-    elif action == "flee":
-        update_index(index - 1)
+    if index <= len(get_path()) - 1:
+        if action == "procceed":
+            update_index(index + 1)
+        elif action == "flee":
+            update_index(index - 1)
+        update_current_pos()
+        move_creatures(get_graph())
+        self.creature_on_vertex = check_creature_on_node(get_current_pos())
+        if self.creature_on_vertex is not None:
+            self.clear_vertex = False
+            toggle_menu(self, get_player(), self.treasure_font)
+        else:
+            self.clear_vertex = True
+            toggle_menu(self, get_player(), self.treasure_font)
 
-    update_current_pos()
-    move_creatures(get_graph())
+        if check_treasure_vertex(get_graph(), get_player(), get_current_pos()):
+            show_found_treasure(self)
 
-    self.creature_on_vertex = check_creature_on_node(get_current_pos())
-
-    if self.creature_on_vertex is not None:
-        self.clear_vertex = False
-        toggle_menu(self, get_player(), self.treasure_font)
-    else:
-        self.clear_vertex = True
-        toggle_menu(self, get_player(), self.treasure_font)
-
-    if check_treasure_vertex(get_graph(), get_player(), get_current_pos()):
-        show_found_treasure(self)
-
-    if check_point(get_graph(), get_current_pos(), get_index(), get_player()):
-        show_checkpoint_saved(self)
-        get_player().setCheckpoint(get_current_pos())
+        if check_point(get_graph(), get_current_pos(), get_index(), get_player()):
+            show_checkpoint_saved(self)
+            get_player().setCheckpoint(get_current_pos())
+        
+        if(get_index() == len(get_path()) - 1):
+            show_victory(self, get_player(), self.treasure_font)
     
 def fight(self):
     from .show_menus import show_game_over
