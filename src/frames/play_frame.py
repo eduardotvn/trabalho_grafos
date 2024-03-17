@@ -1,5 +1,5 @@
-from game_funcs import scatter_cpoints, choose_image, move_creatures, set_treasure_vertex, scatter_item
-from .buttons import show_battle_menu, show_clear_menu, vertexes_on_map, toggle_menu, show_current_treasure, show_current_life, menu_pos, update_index, update_current_pos, update_current_vertex, reset_player, reset_graph, reset_path, get_path,get_index, get_current_pos, get_current_vertex, get_graph, get_player
+from game_funcs import scatter_cpoints, move_creatures, set_treasure_vertex, scatter_item
+from .buttons import show_battle_menu, vertexes_on_map, toggle_menu, menu_pos, update_index, update_current_pos, update_current_vertex, reset_player, reset_graph, reset_path, get_current_pos, get_graph, get_player, search_for_resources, show_icons, set_sprite_image
 from PIL import Image, ImageTk
 import tkinter as tk
 from tkinter import font
@@ -34,26 +34,19 @@ class Play_Frame:
         self.menu_bar_label.pack()
         self.menu_bar_label.place(x=menu_pos[0], y=menu_pos[1], width=718, height=318)
 
+        self.custom_font = font.Font(family="Gabriola", size=24)
         self.treasure_font = font.Font(family="Gabriola", size=48)
-        show_current_treasure(self, get_player(), self.treasure_font)
-        show_current_life(self, get_player(), self.treasure_font)
+        self.victory_font = font.Font(family="Gabriola", size=18, weight='bold')
+        show_icons(self, get_player(), self.treasure_font)
         self.set_pos_on_frame()
         self.show_menu()
-        self.set_sprite_image()
+        set_sprite_image(self)
 
     def show_menu(self):
-        custom_font = font.Font(family="Gabriola", size=24)
         if self.clear_vertex == True:
-            show_clear_menu(self, self.master, custom_font)
+            search_for_resources(self)
         else:
-            show_battle_menu(self, self.master, custom_font, self.creature_on_vertex)
-       
-        
-    def set_sprite_image(self):
-        img_path = choose_image(self)
-        self.sprite_photo = ImageTk.PhotoImage(file=img_path)        
-        self.sprite_label = tk.Label(self.master, image=self.sprite_photo)
-        self.sprite_label.place(x=menu_pos[0] + 38, y=menu_pos[1] + 62, width=194, height=198)
+            show_battle_menu(self, self.master, self.custom_font, self.creature_on_vertex)
     
     def clear_sprite_image(self):
         self.sprite_label.destroy()

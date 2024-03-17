@@ -6,7 +6,6 @@ class BattleResult(Enum):
     FINISHED = 0
     DIED = 1
     MURDERER = 2
-    BOTH_DIED = 3
 
 @dataclass(frozen=True)
 class Battle():
@@ -73,5 +72,3 @@ def calcResultBattle(winner: Enemy, loser: Enemy) -> BattleResult:
         return BattleResult.MURDERER
     elif winner.isDead() and loser.isAlive():
         return BattleResult.DIED
-    elif winner.isDead() and loser.isDead():
-        return BattleResult.BOTH_DIED
