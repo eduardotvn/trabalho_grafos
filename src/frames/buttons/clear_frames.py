@@ -13,10 +13,6 @@ def clear_menu(self):
         self.ress_text.destroy()
     if hasattr(self, 'weapon_button'):
         self.weapon_button.destroy()
-    if hasattr(self, 'treasure_icon'):
-        self.treasure_icon.destroy()
-    if hasattr(self, 'life_icon'):
-        self.life_icon.destroy()
     if hasattr(self, 'game_over'):
         self.game_over.destroy()
     if hasattr(self, 'found_checkpoint'):
@@ -27,7 +23,3 @@ def clear_menu(self):
         self.cure_button.destroy()
     if hasattr(self, 'alert_button'):
         self.alert_button.destroy()
-    if hasattr(self,'hp_icon'):
-        self.hp_icon.destroy()
-    if hasattr(self, 'damage_icon'):
-        self.damage_icon.destroy()

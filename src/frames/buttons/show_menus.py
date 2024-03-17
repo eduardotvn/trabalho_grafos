@@ -92,23 +92,26 @@ def show_current_treasure(self, explorator, custom_font):
     self.treasure_image = tk.PhotoImage(file= "assets/buttons/treasure_icon.png")
     self.treasure_icon = tk.Label(self.master, text=explorator.getTreasurePocket(), image=self.treasure_image, compound=tk.CENTER, font=custom_font, height=55, width=55)
     self.treasure_icon.place(x = 30, y = 30)
+    
 
 def show_current_life(self, explorator, custom_font):
 
     self.life_image = tk.PhotoImage(file= "assets/buttons/life_icon.png")
     self.life_icon = tk.Label(self.master, text = explorator.getLives(), image=self.life_image, compound=tk.CENTER, font=custom_font, height=55, width=55)
     self.life_icon.place(x= 30, y = 100)
+    
 
 def show_current_hp(self, explorator, custom_font):
     self.hp_image = tk.PhotoImage(file = "assets/buttons/hp_icon.png")
     self.hp_icon = tk.Label(self.master, text = explorator.getHp(), image=self.hp_image, compound=tk.CENTER, font=custom_font, height=55, width=55)
     self.hp_icon.place(x= 30, y = 170)
+    
 
 def show_current_damage(self, explorator, custom_font):
     self.damage_image = tk.PhotoImage(file = "assets/buttons/damage_icon.png")
     self.damage_icon = tk.Label(self.master, text = explorator.getAttack(), image=self.damage_image, compound=tk.CENTER, font=custom_font, height=55, width=55)
     self.damage_icon.place(x= 30, y = 240)
-
+    
 
 def show_checkpoint_saved(self):
 

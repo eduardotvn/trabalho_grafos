@@ -36,7 +36,7 @@ def procceed(self, action: str):
     if check_point(get_graph(), get_current_pos(), get_index(), get_player()):
         show_checkpoint_saved(self)
         get_player().setCheckpoint(get_current_pos())
-        
+    
 def fight(self):
     from .show_menus import show_game_over
 
