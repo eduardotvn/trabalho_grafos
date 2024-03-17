@@ -4,7 +4,7 @@ from .clear_frames import clear_menu
 
 def show_battle_menu(self, master, custom_font, enemy):
     menu_pos = [360, 380]
-    self.menu_header_text = tk.Label(master, text= enemy.__class__.__name__+ "! O que fazer?", font=custom_font, bg="#CDA88E")
+    self.menu_header_text = tk.Label(master, text= enemy.NAME + "! O que fazer?", font=custom_font, bg="#CDA88E")
     self.menu_header_text.place(x=menu_pos[0] + 250, y=menu_pos[1] + 20, height=50)
 
     self.fight_button_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
