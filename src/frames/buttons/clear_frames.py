@@ -25,3 +25,7 @@ def clear_menu(self):
         self.cure_button.destroy()
     if hasattr(self, 'alert_button'):
         self.alert_button.destroy()
+    if hasattr(self,'sprite_label'):
+        self.sprite_label.destroy()
+    if hasattr(self, 'trap_button'):
+        self.trap_button.destroy()

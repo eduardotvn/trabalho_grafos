@@ -20,7 +20,7 @@ class CaminhoIngreme(Trap):
 
 class PlantaCarnivora(Trap):
     NAME = 'Planta Carnívora Gigante'
-    DESCRIPTION = 'Uma planta carnívora acaba de ti confundir com inceto'
+    DESCRIPTION = 'Uma planta carnívora acaba de te confundir com inseto'
     DANGER = .4
     DAMAGE = 10
 

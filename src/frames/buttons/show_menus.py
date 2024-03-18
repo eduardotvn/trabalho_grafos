@@ -23,7 +23,6 @@ def show_items(self, items: list, custom_font, vertex, explorator):
     self.weapon_background_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
     self.no_weapon_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
     if len(items) > 0:
-        print(items)
         for i, item in enumerate(items):
             if issubclass(item.__class__, Weapon):
                 self.weapon_button = tk.Button(self.master, text=item.__class__.__name__, image=self.weapon_background_image, command= lambda item=item: get_weapon(self, explorator, item, vertex, custom_font), font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
@@ -48,7 +47,6 @@ def toggle_menu(self, explorator, custom_font):
 
     show_icons(self, explorator, custom_font)
     self.show_menu()
-    self.clear_sprite_image()
     set_sprite_image(self)
     self.set_pos_on_frame()
 
@@ -115,6 +113,11 @@ def alert_button(self, message, custom_font):
     self.alert_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
     self.alert_button = tk.Button(self.master,text = message, image = self.alert_image, command=lambda: self.alert_button.destroy(), compound=tk.CENTER, font=custom_font)
     self.alert_button.place(x=1280/2, y=720/2, width=299, height=59)
+
+def trap_button(self, message, custom_font):
+    self.trap_image = tk.PhotoImage(file="assets/buttons/trap_button.png")
+    self.trap_button = tk.Button(self.master,text = message, image = self.trap_image, command=lambda: self.trap_button.destroy(), compound=tk.CENTER, font=custom_font)
+    self.trap_button.place(x=1280/2, y=720/2, width=399, height=79)
 
 def set_sprite_image(self):
     menu_pos = [360, 380]

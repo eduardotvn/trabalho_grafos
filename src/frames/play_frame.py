@@ -1,4 +1,4 @@
-from game_funcs import scatter_cpoints, move_creatures, set_treasure_vertex, scatter_item
+from game_funcs import scatter_cpoints, move_creatures, set_treasure_vertex, scatter_item, scatter_traps_func
 from .buttons import show_battle_menu, vertexes_on_map, toggle_menu, menu_pos, update_index, update_current_pos, update_current_vertex, reset_player, reset_graph, reset_path, get_current_pos, get_graph, get_player, search_for_resources, show_icons, set_sprite_image
 from PIL import Image, ImageTk
 import tkinter as tk
@@ -8,6 +8,7 @@ move_creatures(get_graph())
 scatter_cpoints(get_graph())
 set_treasure_vertex(get_graph())
 scatter_item(get_graph())
+scatter_traps_func(get_graph())
 
 class Play_Frame:
     def __init__(self, master, image_path, height, width):
@@ -37,6 +38,7 @@ class Play_Frame:
         self.custom_font = font.Font(family="Gabriola", size=24)
         self.treasure_font = font.Font(family="Gabriola", size=48)
         self.victory_font = font.Font(family="Gabriola", size=18, weight='bold')
+        self.trap_font = font.Font(family='Grabiola', size=16)
         show_icons(self, get_player(), self.treasure_font)
         self.set_pos_on_frame()
         self.show_menu()
@@ -47,9 +49,6 @@ class Play_Frame:
             search_for_resources(self)
         else:
             show_battle_menu(self, self.master, self.custom_font, self.creature_on_vertex)
-    
-    def clear_sprite_image(self):
-        self.sprite_label.destroy()
 
     def vertex_clear(self):
         self.clear_vertex = True

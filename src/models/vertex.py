@@ -64,6 +64,13 @@ class Vertex():
         Atribui uma armadilha ao vértice.
         """
         self.__trap = trap
+
+    def getTrap(self) -> Trap:
+        """
+        Retorna o objeto armadilha do vértice, se existir
+        """
+        if self.hasTrap():
+            return self.__trap
     
     def setBeginning(self) -> None:
         """

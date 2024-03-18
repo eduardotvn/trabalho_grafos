@@ -7,6 +7,7 @@ player = DeepExplorator()
 path = player.getSeach(graph, graph.get(0))
 graph.get(0).setBeginning()
 index = 0
+move_count = 0
 checkpoint_index = 0
 current_pos = path[index] 
 current_vertex = graph.get(current_pos)
@@ -18,6 +19,14 @@ def update_index(value):
     """
     global index
     index = value 
+
+def update_move_count():
+    global move_count
+    move_count += 1
+
+def get_move_count():
+    global move_count
+    return move_count
 
 def update_checkpoint(value):
     global checkpoint_index

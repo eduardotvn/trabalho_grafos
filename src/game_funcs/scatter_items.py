@@ -23,7 +23,6 @@ def scatter_item(graph: Graph):
             weapon_vertex = random.randint(1, 19)
         vertexes.append(weapon_vertex)
         graph.get(weapon_vertex).addItem(weapons[i])
-    print(vertexes)
     vertexes = []
     for i in range(4):
         cure_vertex = random.randint(1, 19)
@@ -31,7 +30,6 @@ def scatter_item(graph: Graph):
             cure_vertex = random.randint(1, 19)
         vertexes.append(cure_vertex)
         graph.get(cure_vertex).addItem(cures[i])
-    print(vertexes)
     
 def check_for_items(graph: Graph, value: int):
     return graph.get(value).getVertexItens()

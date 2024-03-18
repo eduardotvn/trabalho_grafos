@@ -1,5 +1,5 @@
-from game_funcs import check_for_items, check_point, move_creatures, check_creature_on_node, ress_explorator, ress_enemy, battle, check_treasure_vertex
-from .global_variables import menu_pos, update_index, update_current_pos, get_index, get_current_pos, get_current_vertex, get_graph, get_player, get_checkpoint_index, get_path
+from game_funcs import check_for_items, check_point, move_creatures, check_creature_on_node, ress_explorator, ress_enemy, battle, check_treasure_vertex, check_for_traps
+from .global_variables import menu_pos, update_index, update_current_pos, get_index, get_current_pos, get_current_vertex, get_graph, get_player, get_checkpoint_index, get_path, get_move_count, update_move_count
 import tkinter as tk
 from tkinter import font
 
@@ -11,7 +11,7 @@ def procceed(self, action: str):
     encarrega de atualizar as posições e checar \n
     possíveis criaturas e checkpoints.
     """
-    from .show_menus import toggle_menu, show_found_treasure, show_checkpoint_saved, show_victory
+    from .show_menus import toggle_menu, show_found_treasure, show_checkpoint_saved, show_victory, trap_button, show_game_over
     index = get_index()
     if index <= len(get_path()) - 1:
         if action == "procceed":
@@ -19,6 +19,7 @@ def procceed(self, action: str):
         elif action == "flee":
             update_index(index - 1)
         update_current_pos()
+        update_move_count()
         move_creatures(get_graph())
         self.creature_on_vertex = check_creature_on_node(get_current_pos())
         if self.creature_on_vertex is not None:
@@ -31,12 +32,20 @@ def procceed(self, action: str):
         if check_treasure_vertex(get_graph(), get_player(), get_current_pos()):
             show_found_treasure(self)
 
+        trap = check_for_traps(get_graph(), get_current_pos()) 
+        if trap:
+            if trap.active():
+                get_player().setDamage(trap.getDamage())
+                trap_button(self, (trap.NAME + "! " + f"-{trap.DAMAGE} de vida."), self.trap_font)
+
         if check_point(get_graph(), get_current_pos(), get_index(), get_player()):
             show_checkpoint_saved(self)
             get_player().setCheckpoint(get_current_pos())
         
         if(get_index() == len(get_path()) - 1):
             show_victory(self, get_player(), self.victory_font)
+        elif(get_move_count() == 3*get_graph().getN()):
+            show_game_over(self, 1)
     
 def fight(self):
     from .show_menus import show_game_over
