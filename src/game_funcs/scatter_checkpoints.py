@@ -1,7 +1,7 @@
 from models import Explorator, Graph, Vertex
 from random import choice
 
-def scatter_cpoints(graph: Graph, numChecks: int = 3):
+def scatter_cpoints(graph: Graph, numChecks: int = 3) -> None:
     """
     Espalha checkpoints pelo grafo.\n
     Se o grafo tem poucos vértices (< 2 * numChecks) nada é feito.

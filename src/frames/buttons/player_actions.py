@@ -33,10 +33,9 @@ def procceed(self, action: str):
             show_found_treasure(self)
 
         trap = check_for_traps(get_graph(), get_current_pos()) 
-        if trap:
-            if trap.active():
-                get_player().setDamage(trap.getDamage())
-                trap_button(self, (trap.NAME + "! " + f"-{trap.DAMAGE} de vida."), self.trap_font)
+        if trap and trap.active():
+            get_player().setDamage(trap.getDamage())
+            trap_button(self, (trap.NAME + "! " + f"-{trap.DAMAGE} de vida."), self.trap_font)
 
         if check_point(get_graph(), get_current_pos(), get_index(), get_player()):
             show_checkpoint_saved(self)
