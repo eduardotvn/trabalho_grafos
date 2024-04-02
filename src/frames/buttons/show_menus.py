@@ -32,9 +32,6 @@ def show_items(self, items: list, custom_font, vertex, explorator):
                 self.cure_button = tk.Button(self.master, text=item.__class__.__name__, image=self.weapon_background_image, command= lambda item=item: get_cure(self, explorator, item, vertex, custom_font), font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
                 self.cure_button.place(x=menu_pos[0] + 270, y=menu_pos[1] + 80 + 100*i, width=300, height=59)
 
-        self.procceed_button_image = tk.PhotoImage(file="assets/buttons/procceed.png")
-        self.procceed_button = tk.Button(self.master, image=self.procceed_button_image, command= lambda: procceed(self, "procceed"), bd=0, borderwidth=0)
-        self.procceed_button.place(x=900, y = 720 / 1.15, width=100, height=48)
     else:
         self.no_weapon = tk.Button(self.master, text="Não há itens aqui...", image=self.no_weapon_image, command = lambda: print(), font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
         self.no_weapon.place(x=menu_pos[0] + 270, y=menu_pos[1] + 80, width=300, height=59)
@@ -43,9 +40,9 @@ def show_items(self, items: list, custom_font, vertex, explorator):
             self.drop_weapon = tk.Button(self.master, image = self.drop_weapon_image, command= lambda: drop_current_weapon(self, explorator, vertex, custom_font), bd = 0)
             self.drop_weapon.place (x = 1010, y = 720 / 1.80, width=40, height=40)
 
-        self.procceed_button_image = tk.PhotoImage(file="assets/buttons/procceed.png")
-        self.procceed_button = tk.Button(self.master, image=self.procceed_button_image, command= lambda: procceed(self, "procceed"), bd=0, borderwidth=0)
-        self.procceed_button.place(x=900, y = 720 / 1.15, width=100, height=48)
+    self.procceed_button_image = tk.PhotoImage(file="assets/buttons/procceed.png")
+    self.procceed_button = tk.Button(self.master, image=self.procceed_button_image, command= lambda: procceed(self, "procceed"), bd=0, borderwidth=0)
+    self.procceed_button.place(x=900, y = 720 / 1.15, width=100, height=48)
 
 def toggle_menu(self, explorator, custom_font):
     clear_menu(self)

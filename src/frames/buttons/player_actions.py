@@ -56,7 +56,7 @@ def fight(self):
 
     if(results.result == "MURDERER"):
         on_enemy_murdered(self)
-    elif(results.result == "DIED"):
+    elif(results.result == "DIED" or get_player().getHp() <= 0):
         if(get_player().getLives() > 1):
             get_player().discountLife()
             if get_player().hasCheckpoint():

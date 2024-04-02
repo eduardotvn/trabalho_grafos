@@ -44,6 +44,10 @@ def exploratorBattle(explorator: Explorator, enemy: Enemy) -> Battle:
     """
     enemyDamage = explorator.getHitFrom(enemy)
     exploratorDamage = enemy.getHitFrom(explorator)
+    enemyDamage = explorator.getHitFrom(enemy)
+    exploratorDamage = enemy.getHitFrom(explorator)
+    enemyDamage = explorator.getHitFrom(enemy)
+    exploratorDamage = enemy.getHitFrom(explorator)
 
     result = calcResultBattle(explorator, enemy)
     return Battle('Explorator x Enemy', result.value, result.name, exploratorDamage, enemyDamage, None, None)
