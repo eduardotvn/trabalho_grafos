@@ -29,3 +29,5 @@ def clear_menu(self):
         self.sprite_label.destroy()
     if hasattr(self, 'trap_button'):
         self.trap_button.destroy()
+    if hasattr(self, 'drop_weapon'):
+        self.drop_weapon.destroy()

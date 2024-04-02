@@ -22,6 +22,7 @@ def show_items(self, items: list, custom_font, vertex, explorator):
 
     self.weapon_background_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
     self.no_weapon_image = tk.PhotoImage(file="assets/buttons/menu_button.png")
+    self.drop_weapon_image = tk.PhotoImage(file="assets/buttons/drop_weapon.png")
     if len(items) > 0:
         for i, item in enumerate(items):
             if issubclass(item.__class__, Weapon):
@@ -37,6 +38,10 @@ def show_items(self, items: list, custom_font, vertex, explorator):
     else:
         self.no_weapon = tk.Button(self.master, text="Não há itens aqui...", image=self.no_weapon_image, command = lambda: print(), font=custom_font, compound=tk.CENTER, bd=0, borderwidth=0)
         self.no_weapon.place(x=menu_pos[0] + 270, y=menu_pos[1] + 80, width=300, height=59)
+
+        if(explorator.hasWeapon()):
+            self.drop_weapon = tk.Button(self.master, image = self.drop_weapon_image, command= lambda: drop_current_weapon(self, explorator, vertex, custom_font), bd = 0)
+            self.drop_weapon.place (x = 1010, y = 720 / 1.80, width=40, height=40)
 
         self.procceed_button_image = tk.PhotoImage(file="assets/buttons/procceed.png")
         self.procceed_button = tk.Button(self.master, image=self.procceed_button_image, command= lambda: procceed(self, "procceed"), bd=0, borderwidth=0)
@@ -133,3 +138,8 @@ def show_victory(self, explorator, custom_font):
     self.victory_text = tk.Label(self.master, text="Você conseguiu fugir com " + str(explorator.getTreasurePocket()) + "% do tesouro!", font=custom_font, fg="black", bg="#773900")
     self.victory_button.place(x=500, y=200, width=399, height=399)
     self.victory_text.place(x = 510, y = 500)
+
+def drop_current_weapon(self, explorator, vertex, custom_font):
+    old_weapon = explorator.setWeapon(None)
+    vertex.addItem(old_weapon)
+    toggle_menu(self, explorator, custom_font)

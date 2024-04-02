@@ -18,6 +18,7 @@ def procceed(self, action: str):
             update_index(index + 1)
         elif action == "flee":
             update_index(index - 1)
+            get_player().getHitFrom(self.creature_on_vertex)
         update_current_pos()
         update_move_count()
         move_creatures(get_graph())
@@ -47,10 +48,11 @@ def procceed(self, action: str):
             show_game_over(self, 1)
     
 def fight(self):
-    from .show_menus import show_game_over
+    from .show_menus import show_game_over, toggle_menu
 
     results = battle(get_player(), self.creature_on_vertex)
 
+    toggle_menu(self, get_player(), self.treasure_font)
 
     if(results.result == "MURDERER"):
         on_enemy_murdered(self)
